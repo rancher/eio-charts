@@ -1,0 +1,30 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{ template "onriodns.name" . }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  template:
+    metadata:
+      labels:
+        app: {{ template "onriodns.name" . }}
+    spec:
+      containers:
+        - name: {{ template "onriodns.name" . }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+          - name: RANCHER_ETCD_ENDPOINTS
+            value: {{ .Values.etcdEndpoint }}
+          - name: RANCHER_ROOT_DOMAIN
+            value: on-rio.io
+          ports:
+            - name: http
+              containerPort: 9333
+              protocol: TCP
+          resources:
+            # Allow chart users to specify resources. Usually, no default should
+            # be set, so this is left to be a conscious choice to the chart
+            # users and avoids that charts don't run out of the box on, e. g.,
+            # Minikube when high resource requests are specified by default.
+            {{- toYaml .Values.resources | nindent 12 }}

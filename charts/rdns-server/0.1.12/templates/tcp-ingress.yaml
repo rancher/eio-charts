@@ -1,0 +1,16 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: rdns-server
+  namespace: onrio-dns
+spec:
+  # tls:
+  #   - hosts:
+  #     - test.onrio-dns.10.11.3.4.xip.io
+  rules:
+  - host: test.onrio-dns.10.11.3.4.xip.io
+    http:
+      paths:
+      - backend:
+          serviceName: rdns-server
+          servicePort: 80
