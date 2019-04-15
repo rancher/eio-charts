@@ -1,0 +1,38 @@
+exposeHostPort: true
+isClusterService: false
+image:
+  repository: niusmallnan/coredns
+  tag: v1.1.1-rancher4
+  pullPolicy: IfNotPresent
+servers:
+- zones:
+  - zone: .
+  port: 53
+  plugins:
+  - name: file
+    parameters: /etc/coredns/api.onrio.eng.rancher.space.dbfile api.onrio.eng.rancher.space
+    configBlock: |-
+      no_reload
+  - name: etcd
+    parameters: onrio.eng.rancher.space
+    configBlock: |-
+      path /rdns
+      endpoint http://etcd-cluster:2379
+      upstream 1.1.1.1:53 1.0.0.1:53
+      wildcardbound 4
+  - name: cache
+    parameters: 60 onrio.eng.rancher.space
+  - name: loadbalance
+  - name: log
+    parameters: stdout
+  - name: errors
+  - name: health
+zoneFiles:
+  - filename: api.onrio.eng.rancher.space.dbfile
+    domain: api.onrio.eng.rancher.space
+    contents: |
+      $ORIGIN api.onrio.eng.rancher.space.     ; designates the start of this zone file in the namespace
+      $TTL 1h                           ; default expiration time of all resource records without their own TTL value
+      @                                       IN  SOA      ns1.onrio.eng.rancher.space. on-rio.rancher.com. 1 3h 1h 1w 1h
+      @                                       IN A 54.71.227.176
+      @                                       IN A 52.27.122.77

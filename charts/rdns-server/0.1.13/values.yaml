@@ -8,6 +8,7 @@ etcdEndpoint: http://etcd-cluster:2379
 resources: {}
 rdnsServerIngressHostname: api.on-rio.io
 dnsRootDomain: on-rio.io
+
 # etcd-operator:
 #   deployments:
 #     backupOperator: false
@@ -42,8 +43,6 @@ dnsRootDomain: on-rio.io
 #     - name: cache
 #       parameters: 60 on-rio.io
 #     - name: loadbalance
-#     - name: proxy
-#       parameters: . 1.1.1.1:53 1.0.0.1:53
 #     - name: log
 #       parameters: stdout
 #     - name: errors
@@ -79,3 +78,19 @@ dnsRootDomain: on-rio.io
 #   letsencrypt:
 #     email: "taylor@rancher.com"
 #   createCustomResource: true
+
+# sysdig
+# ebpf:
+#   # Enable eBPF support for Sysdig Agent
+#   enabled: true
+#
+#   settings:
+#     # Needed to correctly detect the kernel version for the eBPF program
+#     # Set to false if not running on Google COS
+#     mountEtcVolume: false
+# sysdig:
+#   # Required: You need your Sysdig Monitor access key before running agents.
+#   accessKey: "fakekey"
+#   settings:
+#     ### Agent tags
+#     tags: RANCHER:bigmac,ENV:engineering,ROLE:example-onrio-io
