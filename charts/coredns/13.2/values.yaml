@@ -27,6 +27,10 @@ service:
     prometheus.io/scrape: "true"
     prometheus.io/port: "9153"
 
+prometheus:
+  enable: true
+  port: 9153
+
 serviceAccount:
   create: false
   # The name of the ServiceAccount to use
