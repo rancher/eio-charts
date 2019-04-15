@@ -66,10 +66,10 @@ Generate the list of ports automatically from the server definitions
     {{/* Write out the ports according to the info collected above */}}
     {{- range $port, $innerdict := $ports -}}
         {{- if index $innerdict "isudp" -}}
-            {{- printf "- {name: %vUDP, port: %v, protocol: UDP}\n" $port $port -}}
+            {{- printf "- {name: %v-udp, port: %v, protocol: UDP}\n" $port $port -}}
         {{- end -}}
         {{- if index $innerdict "istcp" -}}
-            {{- printf "- {name: %vTCP, port: %v, protocol: TCP}\n" $port $port -}}
+            {{- printf "- {name: %v-tcp, port: %v, protocol: TCP}\n" $port $port -}}
         {{- end -}}
     {{- end -}}
 {{- end -}}
