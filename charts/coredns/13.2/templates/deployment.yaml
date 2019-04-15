@@ -64,6 +64,10 @@ spec:
 {{ toYaml .Values.resources | indent 10 }}
         ports:
 {{ include "coredns.containerPorts" . | indent 8 }}
+        {{- if .Values.prometheus.enable }}
+            - containerPort: {{ .Values.prometheus.port }}
+              protocol: TCP
+        {{- end }}
         livenessProbe:
           httpGet:
             path: /health
