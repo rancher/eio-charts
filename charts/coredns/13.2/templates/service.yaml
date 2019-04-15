@@ -33,6 +33,6 @@ spec:
   ports:
 {{ include "coredns.servicePorts" . | indent 2 -}}
 {{- if .Values.prometheus.enable -}}
-  - {port: {{ .Values.prometheus.port }}, protocol: TCP}
+  - {name: metrics, port: {{ .Values.prometheus.port }}, protocol: TCP}
 {{- end }}
   type: {{ default "ClusterIP" .Values.serviceType }}
