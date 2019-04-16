@@ -1,0 +1,108 @@
+replicaCount: 1
+podAnnotations: {}
+image:
+  repository: niusmallnan/rdns-server
+  tag: v0.4.3
+  pullPolicy: IfNotPresent
+etcdEndpoint: http://etcd-cluster:2379
+resources: {}
+rdnsServerIngressHostname: api.on-rio.io
+dnsRootDomain: on-rio.io
+etcdBackupS3Bucket: rancher-example-onrio-io-etcd-backup
+etcdBackupAwsSecret: etcBackupOperatorAwsCreds
+
+# etcd-operator:
+  # deployments:
+  #   backupOperator: true
+  #   restoreOperator: false
+  # etcdOperator:
+  #     commandArgs:
+  #       cluster-wide: true
+  # backupOperator:
+  #   s3:
+  #     s3Bucket: test
+  #     awsSecret: etcBackupOperatorAwsCreds
+
+
+# coredns:
+  # exposeHostPort: true
+  # isClusterService: false
+  # image:
+  #   repository: niusmallnan/coredns
+  #   tag: v1.1.1-rancher4
+  #   pullPolicy: IfNotPresent
+  # servers:
+  # - zones:
+  #   - zone: .
+  #   port: 53
+  #   plugins:
+  #   - name: file
+  #     parameters: /etc/coredns/api.on-rio.io.dbfile api.on-rio.io
+  #     configBlock: |-
+  #       no_reload
+  #   - name: etcd
+  #     parameters: on-rio.io
+  #     configBlock: |-
+  #       path /rdns
+  #       endpoint http://etcd-cluster:2379
+  #       upstream 1.1.1.1:53 1.0.0.1:53
+  #       wildcardbound 4
+  #   - name: cache
+  #     parameters: 60 on-rio.io
+  #   - name: loadbalance
+  #   - name: prometheus
+  #     parameters: 0.0.0.0:9153
+  #   - name: log
+  #     parameters: stdout
+  #   - name: errors
+  #   - name: health
+  # zoneFiles:
+  #   - filename: api.on-rio.io.dbfile
+  #     domain: api.on-rio.io
+  #     contents: |
+  #       $ORIGIN api.on-rio.io.     ; designates the start of this zone file in the namespace
+  #       $TTL 1h                           ; default expiration time of all resource records without their own TTL value
+  #       @                                       IN  SOA      ns1.on-rio.io. on-rio.rancher.com. 1 3h 1h 1w 1h
+  #       @                                       IN  CNAME    rdns-server-lb-1538981444.us-west-1.elb.amazonaws.com.
+  #       _7c8469744cd3bd85244838f4bd46aa97       IN  CNAME    _d89bf48e492e104f7152378a6babe032.acm-validations.aws.
+
+# From catalog:
+# cert-manager:
+# ---
+#   defaultImage: true
+#   image:
+#     repository: "quay.io/jetstack/cert-manager-controller"
+#     tag: "v0.5.2"
+#   webhook:
+#     image:
+#       repository: "quay.io/jetstack/cert-manager-webhook"
+#       tag: "v0.5.2"
+#     enabled: false
+#     replicaCount: "1"
+#     extraArgs: "[]"
+#   replicaCount: "1"
+#   clusterissuerEnabled: true
+#   ingressShim:
+#     defaultIssuerName: "letsencrypt-prod"
+#   letsencrypt:
+#     email: "taylor@rancher.com"
+#   createCustomResource: true
+
+# sysdig
+# ebpf:
+#   # Enable eBPF support for Sysdig Agent
+#   enabled: true
+#
+#   settings:
+#     # Needed to correctly detect the kernel version for the eBPF program
+#     # Set to false if not running on Google COS
+#     mountEtcVolume: false
+# sysdig:
+#   # Required: You need your Sysdig Monitor access key before running agents.
+#   accessKey: "fakekey"
+#   settings:
+#     ### Agent tags
+#     tags: RANCHER:bigmac,ENV:engineering,ROLE:example-onrio-io
+#     prometheus:
+#       enabled: true
+#       histograms: true
