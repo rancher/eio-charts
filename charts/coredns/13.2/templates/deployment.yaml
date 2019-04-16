@@ -35,6 +35,9 @@ spec:
         scheduler.alpha.kubernetes.io/critical-pod: ''
         scheduler.alpha.kubernetes.io/tolerations: '[{"key":"CriticalAddonsOnly", "operator":"Exists"}]'
         {{- end }}
+        {{- if .Values.prometheus.enable }}
+{{ toYaml .Values.service.annotations | indent 8 }}
+        {{- end }}
     spec:
       serviceAccountName: {{ template "coredns.serviceAccountName" . }}
       {{- if .Values.isClusterService }}
