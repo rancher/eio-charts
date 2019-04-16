@@ -4,6 +4,7 @@ metadata:
   name: etcd-backup
   namespace: etcd-operator
 spec:
+  serviceAccountName: etcd-operator-etcd-operator-etcd-backup-operator
   schedule: "*/30 * * * *"
   jobTemplate:
     spec:
