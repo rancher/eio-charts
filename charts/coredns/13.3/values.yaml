@@ -82,6 +82,9 @@ servers:
 #       hello world
 #       foo bar
 
+# Labels on pods
+labels: {}
+
 # expects input structure as per specification https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.11/#affinity-v1-core
 # for example:
 #   affinity:

@@ -28,6 +28,9 @@ spec:
         k8s-app: {{ .Chart.Name | quote }}
         {{- end }}
         app: {{ template "coredns.name" . }}
+        {{- if .Values.labels }}
+        {{ toYaml .Values.labels | indent 8 }}
+        {{- end }}
         release: {{ .Release.Name | quote }}
       annotations:
         checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}

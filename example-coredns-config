@@ -1,9 +1,21 @@
+replicaCount: 2
 exposeHostPort: true
 isClusterService: false
 image:
   repository: niusmallnan/coredns
   tag: v1.1.1-rancher4
   pullPolicy: IfNotPresent
+affinity:
+  podAntiAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+    - labelSelector:
+      matchExpressions:
+      - key: app
+        operator: In
+        values:
+        - coredns
+labels:
+  app: coredns
 servers:
 - zones:
   - zone: .

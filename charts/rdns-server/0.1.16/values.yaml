@@ -32,6 +32,17 @@ dnsRootDomain: on-rio.io
   #   repository: niusmallnan/coredns
   #   tag: v1.1.1-rancher4
   #   pullPolicy: IfNotPresent
+  # affinity:
+  #   podAntiAffinity:
+  #     requiredDuringSchedulingIgnoredDuringExecution:
+  #     - labelSelector:
+  #       matchExpressions:
+  #       - key: app
+  #         operator: In
+  #         values:
+  #         - coredns
+  # labels:
+  #   app: coredns
   # servers:
   # - zones:
   #   - zone: .
@@ -64,8 +75,10 @@ dnsRootDomain: on-rio.io
   #       $ORIGIN api.on-rio.io.     ; designates the start of this zone file in the namespace
   #       $TTL 1h                           ; default expiration time of all resource records without their own TTL value
   #       @                                       IN  SOA      ns1.on-rio.io. on-rio.rancher.com. 1 3h 1h 1w 1h
-  #       @                                       IN  CNAME    rdns-server-lb-1538981444.us-west-1.elb.amazonaws.com.
-  #       _7c8469744cd3bd85244838f4bd46aa97       IN  CNAME    _d89bf48e492e104f7152378a6babe032.acm-validations.aws.
+  #       @                                       IN  A        record
+  #       @                                       IN  A        record
+  #       @                                       IN  A        record
+  #       @                                       IN  A        record
 
 # From catalog:
 # cert-manager:
