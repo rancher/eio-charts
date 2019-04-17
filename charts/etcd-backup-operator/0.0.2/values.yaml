@@ -1,0 +1,7 @@
+etcdEndpoint: http://etcd-cluster:2379
+s3:
+  path: rancher-example-onrio-io-etcd-backup/onrio-etcd.backup
+  awsSecret: etcbackupoperatorawscreds
+etcdEndpoints: '["http://etcd-cluster-client.rdns-server.svc.cluster.local:2379"]'
+backupIntervalInSecond: 1800
+maxBackups: 336
