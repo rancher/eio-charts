@@ -7,7 +7,7 @@ spec:
   backupPolicy:
     backupIntervalInSecond: 1800
     maxBackups: 336
-  etcdEndpoints: ["http://etcd-cluster-client:2379"]
+  etcdEndpoints: ["http://etcd-cluster-client.{{ template "rdnsserver.name" . }}.svc:2379"]
   storageType: S3
   s3:
     path: {{ .Values.etcdBackupS3Bucket }}/etcd.backup.<NOW>
