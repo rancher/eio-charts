@@ -35,12 +35,13 @@ dnsRootDomain: on-rio.io
   # affinity:
   #   podAntiAffinity:
   #     requiredDuringSchedulingIgnoredDuringExecution:
-  #       - labelSelector:
+  #     - labelSelector:
   #         matchExpressions:
   #         - key: app
   #           operator: In
   #           values:
   #           - coredns
+  #       topologyKey: "kubernetes.io/hostname"
   # labels:
   #   app: coredns
   # servers:
