@@ -29,7 +29,7 @@ spec:
         {{- end }}
         app: {{ template "coredns.name" . }}
         {{- if .Values.labels }}
-        {{ toYaml .Values.labels | indent 8 }}
+        {{ toYaml .Values.labels }}
         {{- end }}
         release: {{ .Release.Name | quote }}
       annotations:
