@@ -9,11 +9,11 @@ affinity:
   podAntiAffinity:
     requiredDuringSchedulingIgnoredDuringExecution:
     - labelSelector:
-      matchExpressions:
-      - key: app
-        operator: In
-        values:
-        - coredns
+        matchExpressions:
+        - key: app
+          operator: In
+          values:
+          - coredns
 labels:
   app: coredns
 servers:
