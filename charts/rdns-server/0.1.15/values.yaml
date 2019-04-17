@@ -8,8 +8,6 @@ etcdEndpoint: http://etcd-cluster:2379
 resources: {}
 rdnsServerIngressHostname: api.on-rio.io
 dnsRootDomain: on-rio.io
-etcdBackupS3Bucket: rancher-example-onrio-io-etcd-backup
-etcdBackupAwsSecret: etcbackupoperatorawscreds
 
 # etcd-operator:
 # deployments:

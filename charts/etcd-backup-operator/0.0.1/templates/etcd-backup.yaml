@@ -1,0 +1,14 @@
+apiVersion: etcd.database.coreos.com/v1beta2
+kind: EtcdBackup
+metadata:
+  name: etcd-cluster-backup
+  namespace: etcd-operator
+spec:
+  backupPolicy:
+    backupIntervalInSecond: {{ .Values.backupIntervalInSecond }}
+    maxBackups: {{ .Values.maxBackups }}
+  etcdEndpoints: {{ .Values.etcdEndpoints }}
+  storageType: S3
+  s3:
+    path: {{ .Values.s3.path }}
+    awsSecret: {{ .Values.s3.awsSecret }}

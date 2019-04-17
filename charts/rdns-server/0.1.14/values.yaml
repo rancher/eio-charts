@@ -12,12 +12,12 @@ etcdBackupS3Bucket: rancher-example-onrio-io-etcd-backup
 etcdBackupAwsSecret: etcbackupoperatorawscreds
 
 # etcd-operator:
-  # deployments:
-  #   backupOperator: true
-  #   restoreOperator: true
-  # etcdOperator:
-  #     commandArgs:
-  #       cluster-wide: true
+# deployments:
+#   backupOperator: true
+#   restoreOperator: true
+# etcdOperator:
+#     commandArgs:
+#       cluster-wide: true
 
 # coredns:
   # exposeHostPort: true
