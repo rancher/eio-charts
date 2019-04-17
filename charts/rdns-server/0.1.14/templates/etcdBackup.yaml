@@ -1,0 +1,15 @@
+apiVersion: etcd.database.coreos.com/v1beta2
+kind: EtcdBackup
+metadata:
+  name: example-etcd-cluster-backup
+  namespace: default
+spec:
+  backupPolicy:
+    backupIntervalInSecond: 1800
+    maxBackups: 336
+  etcdEndpoints: ["http://etcd-cluster-client:2379"]
+  storageType: S3
+  s3:
+    path: {{ .Values.etcdBackupS3Bucket }}/etcd.backup.<NOW>
+    awsSecret: {{.Values.etcdBackupAwsSecret }}
+  storageType: S3

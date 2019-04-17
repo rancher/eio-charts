@@ -14,15 +14,10 @@ etcdBackupAwsSecret: etcBackupOperatorAwsCreds
 # etcd-operator:
   # deployments:
   #   backupOperator: true
-  #   restoreOperator: false
+  #   restoreOperator: true
   # etcdOperator:
   #     commandArgs:
   #       cluster-wide: true
-  # backupOperator:
-  #   s3:
-  #     s3Bucket: test
-  #     awsSecret: etcBackupOperatorAwsCreds
-
 
 # coredns:
   # exposeHostPort: true
