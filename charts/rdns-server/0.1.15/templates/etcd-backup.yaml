@@ -1,0 +1,14 @@
+apiVersion: etcd.database.coreos.com/v1beta2
+kind: EtcdBackup
+metadata:
+  name: etcd-cluster-backup
+  namespace: etcd-operator
+spec:
+  backupPolicy:
+    backupIntervalInSecond: 1800
+    maxBackups: 336
+  etcdEndpoints: ["http://etcd-cluster-client.rdns-server.svc.cluster.local:2379"]
+  storageType: S3
+  s3:
+    path: rancher-example-onrio-io-etcd-backup/etcd.backup.<NOW>
+    awsSecret: etcbackupoperatorawscreds
