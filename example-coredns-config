@@ -2,9 +2,9 @@ replicaCount: 2
 exposeHostPort: true
 isClusterService: false
 image:
-  repository: niusmallnan/coredns
-  tag: v1.1.1-rancher4
-  pullPolicy: IfNotPresent
+  repository: tayworm/coredns
+  tag: coredns-amd64
+  pullPolicy: Always
 affinity:
   podAntiAffinity:
     requiredDuringSchedulingIgnoredDuringExecution:
@@ -22,10 +22,22 @@ servers:
   - zone: .
   port: 53
   plugins:
+  - name: rrl
+    parameters: .
+    configBlock: |-
+      window 15
+      ipv4-prefix-length 24
+      ipv6-prefix-length 56
+      responses-per-second 0
+      nodata-per-second 10
+      nxdomains-per-second 10
+      referrals-per-second 10
+      errors-per-second 10
+      max-table-size 100000
   - name: file
     parameters: /etc/coredns/api.onrio.eng.rancher.space.dbfile api.onrio.eng.rancher.space
     configBlock: |-
-      no_reload
+      reload 0
   - name: etcd
     parameters: onrio.eng.rancher.space
     configBlock: |-
