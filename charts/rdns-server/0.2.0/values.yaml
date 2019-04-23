@@ -1,8 +1,8 @@
 replicaCount: 2
 podAnnotations: {}
 image:
-  repository: niusmallnan/rdns-server
-  tag: v0.4.3
+  repository: rancher/rdns-server
+  tag: v0.4.7-rancher-amd64
   pullPolicy: IfNotPresent
 etcdEndpoint: http://etcd-cluster:2379
 resources: {}
@@ -29,8 +29,8 @@ dnsRootDomain: on-rio.io
 # exposeHostPort: true
 # isClusterService: false
 # image:
-#   repository: tayworm/coredns
-#   tag: coredns-amd64
+#   repository: rancher/coredns
+#   tag: v1.5.0-1-rancher-amd64
 #   pullPolicy: Always
 # affinity:
 #   podAntiAffinity:
@@ -78,7 +78,6 @@ dnsRootDomain: on-rio.io
 #   - name: prometheus
 #     parameters: 0.0.0.0:9153
 #   - name: log
-#     parameters: stdout
 #   - name: errors
 #   - name: health
 # zoneFiles:

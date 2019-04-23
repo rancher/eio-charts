@@ -2,8 +2,8 @@ replicaCount: 2
 exposeHostPort: true
 isClusterService: false
 image:
-  repository: tayworm/coredns
-  tag: coredns-amd64
+  repository: rancher/coredns
+  tag: v1.5.0-1-rancher-amd64
   pullPolicy: Always
 affinity:
   podAntiAffinity:
@@ -51,7 +51,6 @@ servers:
   - name: prometheus
     parameters: 0.0.0.0:9153
   - name: log
-    parameters: stdout
   - name: errors
   - name: health
 zoneFiles:
