@@ -76,7 +76,7 @@ dnsRootDomain: on-rio.io
 #       upstream 1.1.1.1:53 1.0.0.1:53
 #       wildcardbound 3
 #   - name: cache
-#     parameters: 60 on-rio.io
+#     parameters: 600 on-rio.io api.on-rio.io
 #   - name: loadbalance
 #   - name: prometheus
 #     parameters: 0.0.0.0:9153

@@ -53,8 +53,8 @@ isClusterService: true
 exposeHostPort: false
 
 # Creates ingress to expose healthcheck port
-exposeHealthCheck: false
-HealthCheckDomain:
+exposeHealthCheck: true
+HealthCheckDomain: testcom
 
 # Keep in mind that the healthcheck plugin is required because it is used for a liveness check.
 servers:

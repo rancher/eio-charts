@@ -32,10 +32,10 @@ spec:
   {{- end }}
   ports:
 {{ include "coredns.servicePorts" . | indent 2 -}}
-{{- if .Values.prometheus.enable -}}
+{{- if .Values.prometheus.enable }}
   - {name: metrics, port: {{ .Values.prometheus.port }}, protocol: TCP}
 {{- end }}
-{{- if .Values.exposeHealthCheck -}}
+{{ if .Values.exposeHealthCheck }}
   - {name: health, port: 8080, protocol: TCP}
 {{- end }}
   type: {{ default "ClusterIP" .Values.serviceType }}

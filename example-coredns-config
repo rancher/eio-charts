@@ -46,7 +46,7 @@ servers:
       upstream 1.1.1.1:53 1.0.0.1:53
       wildcardbound 5
   - name: cache
-    parameters: 60 onrio.eng.rancher.space
+    parameters: 600 onrio.eng.rancher.space
   - name: loadbalance
   - name: prometheus
     parameters: 0.0.0.0:9153
