@@ -1,0 +1,15 @@
+image:
+  name: drpebcak/etcdv2-backup
+  tag: latest
+  pullPolicy: Always
+
+ttlSecondsAfterFinished: 21600
+activeDeadlineSeconds: 600
+etcdEndpoint: http://etcd-cluster:2379/
+# Every 30 minutes
+cronSchedule: "*/30 * * * *"
+s3:
+  path: rancher-ext-onrio-io-etcd-backup/onrio-etcd.backup
+
+# TODO: if this is true, schedule a job to do a one-time restore operation.
+etcdRestore: false
