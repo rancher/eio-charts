@@ -1,18 +1,20 @@
+# For now we don't need the backup or restore operator because they do not
+# work with etcdv2
 etcd-operator---
 deployments:
-  backupOperator: true
-  restoreOperator: true
+  # backupOperator: true
+  # restoreOperator: true
 etcdOperator:
   commandArgs:
     cluster-wide: true
   image:
     tag: v0.9.4
-backupOperator:
-  image:
-    tag: v0.9.4
-restoreOperator:
-  image:
-    tag: v0.9.4
+# backupOperator:
+#   image:
+#     tag: v0.9.4
+# restoreOperator:
+#   image:
+#     tag: v0.9.4
 
 coredns---
 replicaCount: 4
