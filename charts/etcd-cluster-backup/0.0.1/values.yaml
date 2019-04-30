@@ -6,10 +6,11 @@ image:
 ttlSecondsAfterFinished: 21600
 activeDeadlineSeconds: 600
 etcdEndpoint: http://etcd-cluster:2379/
-# Every 30 minutes
 cronSchedule: "*/30 * * * *"
+
+# For backup, a timestamp will be automatically appended to s3.path
+# For restore, you should set s3.path to the exact path of an existing backup
 s3:
   path: rancher-ext-onrio-io-etcd-backup/onrio-etcd.backup
 
-# TODO: if this is true, schedule a job to do a one-time restore operation.
 etcdRestore: false
