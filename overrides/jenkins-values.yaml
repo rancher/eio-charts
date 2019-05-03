@@ -1,0 +1,83 @@
+master:
+  serviceType: ClusterIP
+  secretsFilesSecret: jenkins-secrets
+  initContainerEnv:
+  - name: SECRETS
+    value: /var/jenkins_secrets
+  containerEnv:
+  - name: SECRETS
+    value: /var/jenkins_secrets
+  installPlugins:
+    - azure-ad:0.3.4
+    - matrix-auth:2.4.2
+    - kubernetes:1.15.2
+    - workflow-job:2.32
+    - workflow-aggregator:2.6
+    - workflow-cps:2.67
+    - pipeline-stage-view:2.11
+    - pipeline-model-definition:1.3.8
+    - pipeline-github-lib:1.0
+    - workflow-api:2.33
+    - pipeline-build-step:2.9
+    - workflow-multibranch:2.21
+    - pipeline-input-step:2.10
+    - pipeline-graph-analysis:1.9
+    - workflow-cps-global-lib:2.13
+    - workflow-basic-steps:2.15
+    - pipeline-stage-step:2.3
+    - workflow-durable-task-step:2.30
+    - pipeline-milestone-step:1.3.1
+    - workflow-scm-step:2.7
+    - plugin-usage-plugin:0.4
+    - build-monitor-plugin:1.12+build.201809061734
+    - cloudbees-folder:6.8
+    - dashboard-view:2.10
+    - build-name-setter:1.7.1
+    - kubernetes-credentials-provider:0.12.1
+    - credentials:2.1.18
+    - credentials-binding:1.18
+    - git:3.10.0
+    - junit:1.27
+    - junit-realtime-test-reporter:0.6
+    - jenkinswalldisplay:0.6.34
+    - github:1.29.4
+    - slack:2.23
+    - build-blocker-plugin:1.7.3
+    - rebuild:1.31
+    - build-failure-analyzer:1.22.0
+    - testInProgress:1.4
+    - ws-cleanup:0.37
+    - disk-usage:0.28
+    - publish-over-ssh:1.20.1
+    - greenballs:1.15
+  overwritePlugins: true
+  JCasC:
+    enabled: true
+    pluginVersion: 1.14
+    supportPluginVersion: 1.14
+    configScripts:
+      security: |
+        jenkins:
+          # AuthorizationStrategy:
+          #   azureAdMatrix:
+          #     grantedPermissions:
+          #       - "Overall/Administer:authenticated" This is an example. We might not want to manage this section, since the usernames are quite long
+          SecurityRealm:
+            azure:
+              clientId: "${CLIENT_ID:-unset}"
+              clientSecret: "${CLIENT_SECRET:-unset}"
+              tenant: "${TENANT:-unset}"
+    sidecars:
+      configAutoReload:
+        enabled: false
+  ingress:
+    enabled: true
+    annotations:
+      kubernetes.io/ingress.class: nginx
+      kubernetes.io/tls-acme: "true"
+      nginx.ingress.kubernetes.io/secure-backends: "true"
+    hostName: jenkins.eng.rancher.space
+    tls:
+    - secretName: jenkins.eng.rancher.space
+      hosts:
+      - jenkins.eng.rancher.space
