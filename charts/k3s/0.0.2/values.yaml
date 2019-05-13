@@ -1,0 +1,52 @@
+image:
+  repository: rancher/k3s
+  tag: v0.5.0
+  pullPolicy: IfNotPresent
+
+server:
+  name: k3s-master
+  replicaCount: 1
+  enableAgent: true
+  clusterCidr: 192.168.0.0/16
+  serviceCidr: 192.169.0.0/16
+  clusterDns: 192.169.0.10
+  k3sKubeconfigMode: 666
+  # Ignored if persistence is enabled
+  rollingUpdate: {}
+  persistence:
+    enabled: true
+    annotations: {}
+    accessMode: ReadWriteOnce
+    size: 8Gi
+
+    # Set this if you have an existing claim to use, otherwise we will create one.
+    # existingClaim: PVC_NAME
+
+    # If defined, storageClassName: <storageClass>
+    # If set to "-", storageClassName: "", which disables dynamic provisioning
+    # If undefined (the default) or set to null, no storageClassName spec is
+    # set, choosing the default provisioner.
+    storageClass:
+
+  # Manifests should be formatted as configmap data entries:
+  # manifests:
+  #   rancher.yaml: |-
+  #     apiVersion: k3s.cattle.io/v1
+  #     kind: HelmChart
+  #     metadata:
+  #       name: rancher
+  #       namespace: kube-system
+  #     spec:
+  #       chart: https://releases.rancher.com/server-charts/latest/rancher-2.2.3-rc9.tgz
+  #       targetNamespace: cattle-system
+  #       set:
+  #         tls: external
+  #         ingress.tls.source: secret
+  manifests: {}
+
+agent:
+  replicaCount: 2
+  enableIngress: true
+  ingressHostname: rancher-upgrade.int.rancher.io
+
+k3sClusterSecret: somethingtotallyrandom
