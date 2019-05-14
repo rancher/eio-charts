@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "server.name" . }}
+  labels:
+    {{ template "server.name" . }}: "true"
+spec:
+  ports:
+  - name: k3sserver
+    port: 6443
+    protocol: TCP
+    targetPort: 6443
+  type: ClusterIP
+  selector:
+    {{ template "server.name" . }}: "true"
