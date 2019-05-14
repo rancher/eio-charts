@@ -1,0 +1,27 @@
+{{ if .Values.agent.ingress.enabled }}
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: {{ template "agent.name" . }}
+  annotations:
+      kubernetes.io/ingress.class: nginx
+      {{- if .Values.agent.ingress.tls.enabled }}
+      kubernetes.io/tls-acme: "true"
+      certmanager.k8s.io/cluster-issuer: letsencrypt-prod
+      nginx.ingress.kubernetes.io/secure-backends: "true"
+      {{- end }}
+spec:
+  rules:
+  - host: {{ .Values.agent.ingress.hostName }}
+    http:
+      paths:
+      - backend:
+          serviceName: {{ template "agent.name" . }}
+          servicePort: k3sagent80
+  {{- if .Values.agent.ingress.tls.enabled }}
+  tls:
+  - hosts:
+    - {{ .Values.agent.ingress.hostName }}
+    secretName: {{ template "agent.name" . }}-ingress-cert
+    {{- end -}}
+{{ end }}
