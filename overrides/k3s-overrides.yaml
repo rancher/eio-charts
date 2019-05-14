@@ -1,0 +1,15 @@
+server:
+  manifests:
+    rancher.yaml: |-
+      apiVersion: k3s.cattle.io/v1
+      kind: HelmChart
+      metadata:
+        name: rancher
+        namespace: kube-system
+      spec:
+        chart: https://releases.rancher.com/server-charts/latest/rancher-2.2.3.tgz
+        targetNamespace: cattle-system
+        set:
+          tls: external
+          ingress.tls.source: secret
+k3sClusterSecret: <some-secret>

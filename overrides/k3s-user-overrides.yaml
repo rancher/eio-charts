@@ -1,0 +1,8 @@
+agent:
+  ingress:
+    enabled: true
+    hostName: |-
+      "*.rancher-upgrade.int.rancher.io"
+    tls:
+      enabled: false
+k3sClusterSecret: <some-secret>
