@@ -1,1 +1,4 @@
 name: etcd-cluster
+etcdEnv:
+  - name: ETCD_AUTO_COMPACTION_RETENTION
+    value: "1"

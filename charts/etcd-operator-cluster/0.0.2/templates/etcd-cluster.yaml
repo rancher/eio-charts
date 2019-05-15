@@ -8,6 +8,13 @@ spec:
   size: 3
   version: "3.2.18"
   pod:
+    {{- if .Values.etcdEnv }}
+    etcdEnv:
+    {{ range $k, $v := .Values.etcdEnv -}}
+    - name: {{ $v.name }}
+      value: {{ $v.value }}
+    {{ end }}
+    {{- end }}
     annotations:
       prometheus.io/scrape: "true"
       prometheus.io/port: "2379"
