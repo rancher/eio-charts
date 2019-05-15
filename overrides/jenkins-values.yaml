@@ -8,6 +8,7 @@ master:
   - name: SECRETS
     value: /var/jenkins_secrets
   installPlugins:
+    - ansicolor:0.6.2
     - azure-ad:0.3.4
     - matrix-auth:2.4.2
     - kubernetes:1.15.4
