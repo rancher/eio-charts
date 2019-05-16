@@ -1,0 +1,5 @@
+options: {}
+nodeSelector: {}
+alpineImage: ""
+extraArgs: {}
+ingressBackend: rancher/nginx-ingress-controller:0.21.0-rancher3

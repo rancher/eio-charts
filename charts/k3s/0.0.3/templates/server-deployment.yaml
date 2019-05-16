@@ -30,6 +30,10 @@ spec:
           {{ if .Values.server.serviceCidr -}}- --service-cidr={{ .Values.server.serviceCidr }}{{- end }}
           {{ if .Values.server.clusterDns -}}- --cluster-dns={{ .Values.server.clusterDns }}{{- end }}
           {{ if not .Values.server.enableAgent -}}- --disable-agent{{- end }}
+          {{ if not .Values.server.enableTraefik }}
+          - --no-deploy
+          - traefik
+          {{- end }}
           env:
           - name: K3S_CLUSTER_SECRET
             value: {{ .Values.k3sClusterSecret }}
