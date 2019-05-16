@@ -47,6 +47,7 @@ master:
     - rebuild:1.31
     - build-failure-analyzer:1.22.0
     - testInProgress:1.4
+    - test-results-analyzer:0.3.5
     - ws-cleanup:0.37
     - disk-usage:0.28
     - publish-over-ssh:1.20.1
