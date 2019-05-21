@@ -65,6 +65,8 @@ spec:
           {{- if .Values.server.manifests -}}
           {{ template "server.manifestnames" . }}
           {{- end }}
+          resources:
+{{ toYaml .Values.resources | indent 12 }}
 
       volumes:
       - name: k3s-data

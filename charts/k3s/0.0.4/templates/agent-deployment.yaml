@@ -32,6 +32,7 @@ spec:
             - containerPort: 443
               name: 443tcp
               protocol: TCP
-          resources: {}
+          resources:
+{{ toYaml .Values.resources | indent 12 }}
           securityContext:
             privileged: true

@@ -3,6 +3,14 @@ image:
   tag: v0.5.0
   pullPolicy: IfNotPresent
 
+resources:
+  limits:
+    cpu: 1
+    memory: 1.5Gi
+  requests:
+    cpu: 1
+    memory: 1.5Gi
+
 server:
   name: k3s-master
   replicaCount: 1
