@@ -22,7 +22,7 @@ master:
     - pipeline-build-step:2.9
     - workflow-multibranch:2.21
     - pipeline-input-step:2.10
-    - pipeline-graph-analysis:1.9
+    - pipeline-graph-analysis:1.10
     - workflow-cps-global-lib:2.13
     - workflow-basic-steps:2.16
     - pipeline-stage-step:2.3
@@ -35,7 +35,7 @@ master:
     - dashboard-view:2.10
     - build-name-setter:2.0.0
     - kubernetes-credentials-provider:0.12.1
-    - credentials:2.1.18
+    - credentials:2.1.19
     - credentials-binding:1.18
     - git:3.10.0
     - junit:1.28
@@ -43,6 +43,7 @@ master:
     - jenkinswalldisplay:0.6.34
     - github:1.29.4
     - slack:2.23
+    - kubernetes-cli:1.6.0
     - build-blocker-plugin:1.7.3
     - rebuild:1.31
     - build-failure-analyzer:1.22.0
@@ -52,12 +53,20 @@ master:
     - disk-usage:0.28
     - publish-over-ssh:1.20.1
     - greenballs:1.15
+    - parameterized-trigger:2.35.2
+    - timestamper:1.9
   overwritePlugins: true
   JCasC:
     enabled: true
     pluginVersion: 1.15
     supportPluginVersion: 1.15
-    # configScripts:
+    configScripts:
+      timestamper: |
+        unclassified:
+          timestamperConfig:
+            allPipelines: true
+            elapsedTimeFormat: "'<b>'HH:mm:ss.S'</b> '"
+            systemTimeFormat: "'<b>'HH:mm:ss.S'</b> '"
     #   security: |
     #     jenkins:
     #       # AuthorizationStrategy:
@@ -83,17 +92,20 @@ master:
     - secretName: jenkins.int.rancher.io
       hosts:
       - jenkins.int.rancher.io
+persistence:
+  existingClaim: jenkins
 agent:
   image: "drpebcak/jnlp-slave"
   imageTag: "3.27-1-2"
   privileged: true
+  idleMinutes: 5
   resources:
     requests:
       cpu: "400m"
       memory: "512Mi"
     limits:
-      cpu: "400m"
-      memory: "512Mi"
+      cpu: "800m"
+      memory: "1Gi"
   volumes:
     - type: HostPath
       hostPath: /var/run/docker.sock
