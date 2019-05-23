@@ -101,11 +101,11 @@ agent:
   idleMinutes: 5
   resources:
     requests:
-      cpu: "400m"
-      memory: "512Mi"
+      cpu: "600m"
+      memory: "1Gi"
     limits:
       cpu: "800m"
-      memory: "1Gi"
+      memory: "2Gi"
   volumes:
     - type: HostPath
       hostPath: /var/run/docker.sock
