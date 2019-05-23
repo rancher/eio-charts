@@ -1,4 +1,5 @@
 server:
+  enableTraefik: false
   manifests:
     nginx-ns.yaml: |-
       apiVersion: v1
