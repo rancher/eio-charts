@@ -1,0 +1,78 @@
+# Default values for slackin.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+slackinCoc: ""
+#A URL to a Code of Conduct people must agree on before joining.
+
+slackinChannels: "#general"
+#For single channel mode
+#channel,channel,...
+
+slackinHostname: "0.0.0.0"
+#Hostname to listen on
+
+slackinCSS: ""
+#Skackin Site CSS
+
+slackinTheme: "light"
+#Color scheme to use, light or dark
+
+slackinPort: 3000
+#Slackin App Port Defaul 3000
+
+slackSubdomain: "rancher-users"
+#Your Slack's subdomain (**this**.slack.com)
+
+secret:
+  name: slackinsecrets
+  # Set this to true if you want to manage these secrets with helm
+  managed: false
+  slackApiToken: ""
+  #A Slack API token (find it on https://api.slack.com/web)
+  googleCaptchaSecret: ""
+  #Google captcha secret key
+  googleCaptchaSiteKey: ""
+  #Google captcha site key
+
+
+replicaCount: 1
+
+image:
+  repository: drpebcak/slackin-extended
+  tag: 0.13.2
+  pullPolicy: IfNotPresent
+
+nameOverride: ""
+fullnameOverride: ""
+
+service:
+  type: ClusterIP
+  port: 80
+
+ingress:
+  enabled: true
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    kubernetes.io/tls-acme: "true"
+  path: /
+  hosts:
+    - slack.rancher.io
+  tls:
+   - secretName: slack-rancher-io-tls
+     hosts:
+       - slack.rancher.io
+
+resources:
+  limits:
+   cpu: 300m
+   memory: 512Mi
+  requests:
+   cpu: 300m
+   memory: 512Mi
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
