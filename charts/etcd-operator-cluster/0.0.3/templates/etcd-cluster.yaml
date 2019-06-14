@@ -5,8 +5,8 @@ metadata:
   annotations:
     etcd.database.coreos.com/scope: clusterwide
 spec:
-  size: 3
-  version: "3.2.18"
+  size: {{ .Values.size }}
+  version: "{{ .Values.version }}"
   pod:
     {{- if .Values.etcdEnv }}
     etcdEnv:
@@ -16,8 +16,7 @@ spec:
     {{ end }}
     {{- end }}
     annotations:
-      prometheus.io/scrape: "true"
-      prometheus.io/port: "2379"
+      {{- toYaml .Values.annotations | nindent 6 }}
     affinity:
       podAntiAffinity:
         requiredDuringSchedulingIgnoredDuringExecution:
