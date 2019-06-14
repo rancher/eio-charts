@@ -1,0 +1,21 @@
+mirror:
+  image:
+    repository: drpebcak/git-mirror
+    tag: test
+    pullPolicy: Always
+serve:
+  image:
+    repository: drpebcak/git-serve
+    tag: test
+    pullPolicy: Always
+logrotate:
+  image:
+    repository: drpebcak/git-logrotate
+    tag: test
+    pullPolicy: Always
+analyze:
+  image:
+    repository: drpebcak/git-analyze
+    tag: test
+    pullPolicy: Always
+mirrorEtcdEndpoints: http://etcd-cluster:2379

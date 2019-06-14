@@ -12,7 +12,7 @@ spec:
     etcdEnv:
     {{ range $k, $v := .Values.etcdEnv -}}
     - name: {{ $v.name }}
-      value: {{ $v.value }}
+      value: "{{ $v.value }}"
     {{ end }}
     {{- end }}
     annotations:
