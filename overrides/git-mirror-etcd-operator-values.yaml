@@ -1,6 +1,6 @@
 deployments:
-  backupOperator: true
-  restoreOperator: true
+  backupOperator: false
+  restoreOperator: false
 etcdOperator:
   commandArgs:
     cluster-wide: true

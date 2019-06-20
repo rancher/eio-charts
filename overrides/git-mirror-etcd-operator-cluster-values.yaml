@@ -1,0 +1,9 @@
+size: 1
+version: "2.3.7"
+etcdEnv:
+- name: EMBEDDED_BACKUPS
+  value: "false"
+- name: ETCD_ELECTION_TIMEOUT
+  value: "5000"
+- name: ETCD_HEARTBEAT_INTERVAL
+  value: "500"
