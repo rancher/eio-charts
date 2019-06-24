@@ -64,7 +64,7 @@ spec:
               port: http
           volumeMounts:
           - mountPath: /run/secrets/upgrade-responder-config.json
-            name: lurResponseConfig
+            name: lurresponseconfig
             subPath: upgrade-responder-config.json
           resources:
 {{ toYaml .Values.resources | indent 12 }}
@@ -83,6 +83,6 @@ spec:
 
 
       volumes:
-      - name: lurResponseConfig
+      - name: lurresponseconfig
         configMap:
           name: {{ template "longhornUpdateResponder.fullname" . }}
