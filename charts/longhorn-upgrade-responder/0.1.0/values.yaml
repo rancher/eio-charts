@@ -1,6 +1,3 @@
-slackSubdomain: "rancher-users"
-#Your Slack's subdomain (**this**.slack.com)
-
 secret:
   name: lursecrets
   # Set this to true if you want to manage these secrets with helm
