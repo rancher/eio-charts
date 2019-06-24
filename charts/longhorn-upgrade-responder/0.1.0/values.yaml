@@ -1,0 +1,65 @@
+slackSubdomain: "rancher-users"
+#Your Slack's subdomain (**this**.slack.com)
+
+secret:
+  name: lursecrets
+  # Set this to true if you want to manage these secrets with helm
+  managed: false
+  lurInfluxUrl: ""
+  lurInfluxUser: ""
+  lurInfluxPassword: ""
+
+# This configmap contains information about the latest longhorn release
+configMap:
+  name: lurresponseconfig
+  # Set this to true if you want to manage this configmap with helm
+  managed: false
+  lurResponseConfig: |-
+    {
+       "Versions": [{
+          "Name": "v0.5.0",
+          "ReleaseDate": "2019-05-18T12:30:00Z",
+          "Tags": ["latest"]
+       }]
+    }
+
+replicaCount: 1
+
+image:
+  repository: rancherlabs/longhorn-services
+  tag: f22e9b5
+  pullPolicy: IfNotPresent
+
+nameOverride: ""
+fullnameOverride: ""
+
+service:
+  type: ClusterIP
+  port: 8314
+
+ingress:
+  enabled: true
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    kubernetes.io/tls-acme: "true"
+  path: /
+  hosts:
+    - longhorn-upgrade-responder.rancher.io
+  tls:
+   - secretName: longhorn-upgrade-responder-rancher-io-tls
+     hosts:
+       - longhorn-upgrade-responder.rancher.io
+
+resources:
+  limits:
+   cpu: 300m
+   memory: 512Mi
+  requests:
+   cpu: 300m
+   memory: 512Mi
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
