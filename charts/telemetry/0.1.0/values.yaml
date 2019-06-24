@@ -4,12 +4,12 @@ secret:
   managed: false
   telemetryGaTid: ""
   telemetryPgPass: ""
+  telemetryPgHost: ""
 
-telemetryPgHost: ""
 telemetryPgSSL: "require"
 telemetryPort: 8115
 
-replicaCount: 1
+replicaCount: 3
 
 image:
   repository: rancher/telemetry
@@ -35,11 +35,11 @@ ingress:
 
 resources:
   limits:
-   cpu: 300m
-   memory: 512Mi
+   cpu: 200m
+   memory: 256Mi
   requests:
-   cpu: 300m
-   memory: 512Mi
+   cpu: 100m
+   memory: 128Mi
 
 nodeSelector: {}
 

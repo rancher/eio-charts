@@ -30,7 +30,10 @@ spec:
               name: {{ .Values.secret.name }}
               key: telemetryGaTid
         - name: TELEMETRY_PG_HOST
-          value: db
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Values.secret.name }}
+              key: telemetryPgHost
         - name: TELEMETRY_PG_PASS
           valueFrom:
             secretKeyRef:
