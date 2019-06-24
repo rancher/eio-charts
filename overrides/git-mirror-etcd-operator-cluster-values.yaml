@@ -1,5 +1,4 @@
 size: 1
-version: "2.3.7"
 etcdEnv:
 - name: EMBEDDED_BACKUPS
   value: "false"
