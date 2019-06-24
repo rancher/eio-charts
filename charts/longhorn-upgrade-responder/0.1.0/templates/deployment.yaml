@@ -85,4 +85,4 @@ spec:
       volumes:
       - name: lurresponseconfig
         configMap:
-          name: {{ template "longhornUpdateResponder.fullname" . }}
+          name: lurresponseconfig
