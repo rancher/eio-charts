@@ -2,7 +2,7 @@ mirror:
   replicaCount: 1
   image:
     repository: rancher/git-mirror
-    tag: 0.3
+    tag: v0.1.0
     pullPolicy: IfNotPresent
   resources:
     limits:
@@ -15,7 +15,7 @@ mirror:
 serve:
   image:
     repository: rancher/git-serve
-    tag: 0.6
+    tag: v0.1.0
     pullPolicy: IfNotPresent
   resources:
     limits:
@@ -43,7 +43,7 @@ serve:
 logrotate:
   image:
     repository: rancher/git-logrotate
-    tag: 0.1
+    tag: v0.1.0
     pullPolicy: IfNotPresent
   resources:
     limits:
@@ -58,7 +58,7 @@ analyze:
   replicaCount: 1
   image:
     repository: rancher/git-analyze
-    tag: 0.4
+    tag: v0.1.0
     pullPolicy: IfNotPresent
   resources:
     limits:
