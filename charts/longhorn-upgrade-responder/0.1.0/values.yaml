@@ -26,6 +26,7 @@ image:
   repository: rancherlabs/longhorn-services
   tag: f22e9b5
   pullPolicy: IfNotPresent
+  pullSecrets: private-pull
 
 nameOverride: ""
 fullnameOverride: ""
