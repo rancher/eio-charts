@@ -41,6 +41,8 @@ spec:
               secretKeyRef:
                 name: {{ .Values.secret.name }}
                 key: lurInfluxPassword
+          command:
+          - longhorn-services
           args:
           - --debug
           - start-upgrade-responder
