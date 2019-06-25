@@ -19,11 +19,11 @@ spec:
         app.kubernetes.io/name: {{ include "longhornUpdateResponder.name" . }}
         app.kubernetes.io/instance: {{ .Release.Name }}
     spec:
+      imagePullSecrets:
+      - name: {{ .Values.image.pullSecrets }}
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-          imagePullSecrets:
-          - name: {{ .Values.image.pullSecrets }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
           - name: INFLUX_URL
