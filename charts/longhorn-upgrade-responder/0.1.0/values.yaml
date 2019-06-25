@@ -20,7 +20,7 @@ configMap:
        }]
     }
 
-replicaCount: 1
+replicaCount: 3
 
 image:
   repository: rancherlabs/longhorn-services
