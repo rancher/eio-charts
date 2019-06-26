@@ -41,7 +41,7 @@ spec:
         args:
         - rancher-catalog-stats
         - -filepath
-        - /var/log/nginx/access-*.log
+        - \"/var/log/nginx/access-*.log\"
         - -influxurl
         - $(INFLUX_URL)
         - -influxdb
