@@ -300,12 +300,12 @@ server:
         name: rancher
         namespace: kube-system
       spec:
-        chart: https://releases.rancher.com/server-charts/latest/rancher-2.2.4-rc12.tgz
+        chart: https://releases.rancher.com/server-charts/latest/rancher-2.2.4.tgz
         targetNamespace: cattle-system
         set:
           tls: external
           ingress.tls.source: secret
           rancherImagePullPolicy: Always
-          rancherImageTag: master
+          rancherImageTag: master-head
 
 k3sClusterSecret: <some-secret>
