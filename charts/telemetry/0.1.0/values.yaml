@@ -25,6 +25,8 @@ ingress:
   annotations:
     kubernetes.io/ingress.class: nginx
     kubernetes.io/tls-acme: "true"
+    prometheus.io/scrape: "true"
+    prometheus.io/port: "10254"
   path: /
   hosts:
     - telemetry.rancher.io
