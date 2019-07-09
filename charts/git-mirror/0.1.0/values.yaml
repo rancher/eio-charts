@@ -34,6 +34,7 @@ serve:
       kubernetes.io/tls-acme: "true"
       prometheus.io/scrape: "true"
       prometheus.io/port: "10254"
+      nginx.ingress.kubernetes.io/ssl-ciphers: "HIGH:!aNULL:!MD5"
     path: /
     hosts:
       - git.rancher.io
