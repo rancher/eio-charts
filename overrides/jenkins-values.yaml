@@ -11,10 +11,10 @@ master:
     - ansicolor:0.6.2
     - azure-ad:1.0.0
     - matrix-auth:2.4.2
-    - kubernetes:1.16.0
-    - workflow-job:2.32
+    - kubernetes:1.17.2
+    - workflow-job:2.33
     - workflow-aggregator:2.6
-    - workflow-cps:2.70
+    - workflow-cps:2.72
     - pipeline-stage-view:2.11
     - pipeline-model-definition:1.3.9
     - pipeline-github-lib:1.0
@@ -23,10 +23,10 @@ master:
     - workflow-multibranch:2.21
     - pipeline-input-step:2.10
     - pipeline-graph-analysis:1.10
-    - workflow-cps-global-lib:2.13
+    - workflow-cps-global-lib:2.14
     - workflow-basic-steps:2.18
     - pipeline-stage-step:2.3
-    - workflow-durable-task-step:2.31
+    - workflow-durable-task-step:2.32
     - pipeline-milestone-step:1.3.1
     - workflow-scm-step:2.9
     - plugin-usage-plugin:0.4
@@ -37,12 +37,12 @@ master:
     - kubernetes-credentials-provider:0.12.1
     - credentials:2.2.0
     - credentials-binding:1.19
-    - git:3.10.0
+    - git:3.10.1
     - junit:1.28
     - junit-realtime-test-reporter:0.6
     - jenkinswalldisplay:0.6.34
     - github:1.29.4
-    - slack:2.24
+    - slack:2.27
     - kubernetes-cli:1.6.0
     - build-blocker-plugin:1.7.3
     - rebuild:1.31
@@ -54,14 +54,16 @@ master:
     - publish-over-ssh:1.20.1
     - greenballs:1.15
     - parameterized-trigger:2.35.2
-    - timestamper:1.9
+    - timestamper:1.10
     - plain-credentials:1.5
-    - ssh-credentials:1.17
-    - branch-api:2.5.2
+    - ssh-credentials:1.17.1
+    - branch-api:2.5.3
+    - dockerhub-notification:2.4.0
+    - throttle-concurrents:2.0.1
   overwritePlugins: true
   JCasC:
     enabled: true
-    pluginVersion: 1.19
+    pluginVersion: 1.23
     supportPluginVersion: 1.19
     configScripts:
       timestamper: |
@@ -99,9 +101,9 @@ persistence:
   existingClaim: jenkins
 agent:
   image: "drpebcak/jnlp-slave"
-  imageTag: "3.29-1-1"
+  imageTag: "3.29-1-2"
   privileged: true
-  idleMinutes: 5
+  idleMinutes: 20
   resources:
     requests:
       cpu: "600m"
