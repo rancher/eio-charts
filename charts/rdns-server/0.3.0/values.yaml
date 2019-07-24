@@ -1,0 +1,10 @@
+replicaCount: 2
+podAnnotations: {}
+image:
+  repository: rancher/rdns-server
+  tag: v0.4.7-rancher-amd64
+  pullPolicy: IfNotPresent
+etcdEndpoint: http://etcd-cluster:2379
+resources: {}
+rdnsServerIngressHostname: api.on-rio.io
+dnsRootDomain: on-rio.io
