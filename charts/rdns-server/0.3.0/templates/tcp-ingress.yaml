@@ -11,6 +11,8 @@ metadata:
       nginx.ingress.kubernetes.io/limit-rps: "5"
       nginx.ingress.kubernetes.io/limit-rpm: "50"
       nginx.ingress.kubernetes.io/limit-connections: "5"
+      prometheus.io/scrape: "true"
+      prometheus.io/port: "10254"
 spec:
   rules:
   - host: {{ .Values.rdnsServerIngressHostname }}

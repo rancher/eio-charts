@@ -6,6 +6,5 @@ image:
   pullPolicy: IfNotPresent
 resources: {}
 rdnsServerIngressHostname: api.on-rio.io
-dnsRootDomain: on-rio.io
 secret:
   name: rdnsserver
