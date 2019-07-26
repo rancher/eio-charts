@@ -1,5 +1,8 @@
 replicaCount: 2
-podAnnotations: {}
+podAnnotations:
+  prometheus.io/scrape: "true"
+  prometheus.io/port: "9333"
+  prometheus.io/path: "/metrics"
 image:
   repository: rancher/rdns-server
   tag: v0.5.3-rancher-amd64
