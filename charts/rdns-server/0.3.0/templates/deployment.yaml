@@ -14,15 +14,44 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
-          - name: RANCHER_ETCD_ENDPOINTS
-            value: {{ .Values.etcdEndpoint }}
-          - name: RANCHER_ROOT_DOMAIN
-            value: {{ .Values.dnsRootDomain }}
+          - name: AWS_HOSTED_ZONE_ID
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.secret.name }}
+                key: awsHostedZoneId
+          - name: AWS_ACCESS_KEY_ID
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.secret.name }}
+                key: awsAccessKeyId
+          - name: AWS_SECRET_ACCESS_KEY
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.secret.name }}
+                key: awsSecretAccessKey
+          - name: DSN
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.secret.name }}
+                key: dsn
+          - name: TTL
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.secret.name }}
+                key: ttl
+          args:
+          - route53
           ports:
             - name: http
               containerPort: 9333
               protocol: TCP
           livenessProbe:
+            httpGet:
+              path: /ping
+              port: http
+            initialDelaySeconds: 3
+            periodSeconds: 3
+          readinessProbe:
             httpGet:
               path: /ping
               port: http
