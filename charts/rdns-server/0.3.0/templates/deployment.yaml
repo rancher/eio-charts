@@ -39,6 +39,8 @@ spec:
               secretKeyRef:
                 name: {{ .Values.secret.name }}
                 key: ttl
+          command:
+          - rdns-server
           args:
           - route53
           ports:
