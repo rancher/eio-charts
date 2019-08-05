@@ -47,18 +47,18 @@ spec:
             - name: http
               containerPort: 9333
               protocol: TCP
-          livenessProbe:
-            httpGet:
-              path: /ping
-              port: http
-            initialDelaySeconds: 3
-            periodSeconds: 3
-          readinessProbe:
-            httpGet:
-              path: /ping
-              port: http
-            initialDelaySeconds: 3
-            periodSeconds: 3
+          # livenessProbe:
+          #   httpGet:
+          #     path: /ping
+          #     port: http
+          #   initialDelaySeconds: 3
+          #   periodSeconds: 3
+          # readinessProbe:
+          #   httpGet:
+          #     path: /ping
+          #     port: http
+          #   initialDelaySeconds: 3
+          #   periodSeconds: 3
           resources:
             # Allow chart users to specify resources. Usually, no default should
             # be set, so this is left to be a conscious choice to the chart
