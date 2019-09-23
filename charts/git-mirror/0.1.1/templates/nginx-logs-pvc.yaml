@@ -1,0 +1,14 @@
+# EFS
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: efs-shared
+  annotations:
+    volume.beta.kubernetes.io/storage-class: "efs"
+spec:
+  accessModes:
+  - ReadWriteMany
+  resources:
+    requests:
+      storage: 100Mi
+  storageClassName: efs
