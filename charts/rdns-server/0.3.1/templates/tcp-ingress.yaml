@@ -2,7 +2,6 @@ apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: {{ template "rdnsserver.name" . }}
-  namespace: {{ template "rdnsserver.name" . }}
   annotations:
       kubernetes.io/ingress.class: nginx
       kubernetes.io/tls-acme: "true"

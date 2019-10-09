@@ -154,7 +154,7 @@ server:
           name: nginx-ingress-serviceaccount
           namespace: ingress-nginx
     nginx-ds.yaml: |-
-      apiVersion: extensions/v1beta1
+      apiVersion: apps/v1
       kind: DaemonSet
       metadata:
         name: nginx-ingress-controller
@@ -182,9 +182,14 @@ server:
                           - windows
             hostNetwork: true
             serviceAccountName: nginx-ingress-serviceaccount
+            tolerations:
+            - effect: NoExecute
+              operator: Exists
+            - effect: NoSchedule
+              operator: Exists
             containers:
               - name: nginx-ingress-controller
-                image: rancher/nginx-ingress-controller:0.21.0-rancher3
+                image: rancher/nginx-ingress-controller:nginx-0.25.1-rancher1
                 args:
                   - /nginx-ingress-controller
                   - --default-backend-service=$(POD_NAMESPACE)/default-http-backend
@@ -233,7 +238,7 @@ server:
                   successThreshold: 1
                   timeoutSeconds: 1
     nginx-dep.yaml: |-
-      apiVersion: extensions/v1beta1
+      apiVersion: apps/v1
       kind: Deployment
       metadata:
         name: default-http-backend
@@ -242,6 +247,9 @@ server:
         namespace: ingress-nginx
       spec:
         replicas: 1
+        selector:
+          matchLabels:
+            app: default-http-backend
         template:
           metadata:
             labels:
@@ -256,13 +264,20 @@ server:
                         operator: NotIn
                         values:
                           - windows
+                      - key node-role.kubernetes.io/worker
+                        operator: Exists
             terminationGracePeriodSeconds: 60
+            tolerations:
+            - effect: NoExecute
+              operator: Exists
+            - effect: NoSchedule
+              operator: Exists
             containers:
             - name: default-http-backend
               # Any image is permissable as long as:
               # 1. It serves a 404 page at /
               # 2. It serves 200 on a /healthz endpoint
-              image: rancher/nginx-ingress-controller-defaultbackend:1.4-rancher1
+              image: k8s.gcr.io/defaultbackend:1.5-rancher1
               livenessProbe:
                 httpGet:
                   path: /healthz
