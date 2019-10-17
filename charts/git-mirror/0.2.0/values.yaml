@@ -90,7 +90,7 @@ fullnameOverride: ""
 
 mirrorDataDir: /var/git
 mirrorDebug: "false"
-mirrorEtcdEndpoints: http://etcd:2379
+mirrorEtcdEndpoints: http://etcd-cluster:2379
 mirrorGithubListenAddr: :4141
 mirrorPollPeriod: 5m
 mirrorRepo: https://github.com/rancher/rancher-catalog, https://github.com/rancher/community-catalog, https://github.com/rancher/infra-catalog, https://github.com/rancher/charts,https://github.com/rancher/system-charts
