@@ -1,0 +1,28 @@
+{{- if .Values.server.persistence.enabled -}}
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+{{- if .Values.server.persistence.annotations }}
+  annotations:
+{{ toYaml .Values.server.persistence.annotations | indent 4 }}
+{{- end }}
+  name: {{ template "server.fullname" . }}
+  labels:
+    "app.kubernetes.io/name": '{{ template "agent.name" .}}'
+    "helm.sh/chart": "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    "app.kubernetes.io/managed-by": "{{ .Release.Service }}"
+    "app.kubernetes.io/instance": "{{ .Release.Name }}"
+spec:
+  accessModes:
+    - {{ .Values.server.persistence.accessMode | quote }}
+  resources:
+    requests:
+      storage: {{ .Values.server.persistence.size | quote }}
+{{- if .Values.server.persistence.storageClass }}
+{{- if (eq "-" .Values.server.persistence.storageClass) }}
+  storageClassName: ""
+{{- else }}
+  storageClassName: "{{ .Values.server.persistence.storageClass }}"
+{{- end }}
+{{- end }}
+{{- end }}
