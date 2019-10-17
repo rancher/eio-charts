@@ -1,0 +1,56 @@
+secret:
+  name: telemetrysecrets
+  # Set this to true if you want to manage these secrets with helm
+  managed: false
+  telemetryGaTid: ""
+  telemetryPgPass: ""
+  telemetryPgHost: ""
+
+telemetryPgSSL: "require"
+telemetryPort: 8115
+
+replicaCount: 3
+admin:
+  replicaCount: 1
+  ingress:
+    path: /admin
+
+image:
+  repository: rancher/telemetry
+  tag: v0.6.0
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 80
+
+ingress:
+  enabled: true
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    prometheus.io/scrape: "true"
+    prometheus.io/port: "10254"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
+    nginx.ingress.kubernetes.io/ssl-ciphers: "HIGH:!aNULL:!MD5"
+  path: /
+  hosts:
+    - telemetry.rancher.io
+  tls:
+   - secretName: telemetry-rancher-io-tls
+     hosts:
+       - telemetry.rancher.io
+
+resources:
+  limits:
+   cpu: 400m
+   memory: 512Mi
+  requests:
+   cpu: 300m
+   memory: 512Mi
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
