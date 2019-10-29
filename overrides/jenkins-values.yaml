@@ -10,8 +10,8 @@ master:
   installPlugins:
     - ansicolor:0.6.2
     - azure-ad:1.0.0
-    - matrix-auth:2.4.2
-    - kubernetes:1.20.0
+    - matrix-auth:2.5
+    - kubernetes:1.20.2
     - workflow-job:2.35
     - workflow-aggregator:2.6
     - workflow-cps:2.74
@@ -34,19 +34,19 @@ master:
     - cloudbees-folder:6.9
     - dashboard-view:2.12
     - build-name-setter:2.0.3
-    - kubernetes-credentials-provider:0.12.1
+    - kubernetes-credentials-provider:0.13
     - credentials:2.3.0
     - credentials-binding:1.20
-    - git:3.11.0
+    - git:3.12.1
     - junit:1.28
     - junit-realtime-test-reporter:0.6
     - jenkinswalldisplay:0.6.34
-    - github:1.29.4
+    - github:1.29.5
     - slack:2.34
     - kubernetes-cli:1.7.0
     - build-blocker-plugin:1.7.3
     - rebuild:1.31
-    - build-failure-analyzer:1.23.1
+    - build-failure-analyzer:1.24.0
     - testInProgress:1.4
     - test-results-analyzer:0.3.5
     - ws-cleanup:0.37
