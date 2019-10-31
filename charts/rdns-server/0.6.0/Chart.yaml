@@ -3,4 +3,4 @@ appVersion: 0.5.7
 description: Deploys rancher/rdns-server
 icon: https://github.com/rancher/ui/blob/master/public/assets/images/logos/welcome-cow.svg
 name: rdns-server
-version: 0.5.0
+version: 0.6.0
