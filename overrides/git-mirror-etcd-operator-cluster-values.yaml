@@ -1,8 +1,0 @@
-size: 1
-etcdEnv:
-- name: EMBEDDED_BACKUPS
-  value: "false"
-- name: ETCD_ELECTION_TIMEOUT
-  value: "5000"
-- name: ETCD_HEARTBEAT_INTERVAL
-  value: "500"
