@@ -1,5 +1,5 @@
 replicaCount: 2
-podAnnotations:
+serviceAnnotations:
   prometheus.io/scrape: "true"
   prometheus.io/port: "9333"
   prometheus.io/path: "/metrics"

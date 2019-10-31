@@ -65,5 +65,3 @@ spec:
             # users and avoids that charts don't run out of the box on, e. g.,
             # Minikube when high resource requests are specified by default.
             {{- toYaml .Values.resources | nindent 12 }}
-          annotations:
-            {{- toYaml .Values.podAnnotations| nindent 12 }}
