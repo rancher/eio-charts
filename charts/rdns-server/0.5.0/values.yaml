@@ -11,3 +11,16 @@ resources: {}
 rdnsServerIngressHostname: api.on-rio.io
 secret:
   name: rdnsserver
+ingressAnnotations:
+  kubernetes.io/ingress.class: nginx
+  cert-manager.io/cluster-issuer: letsencrypt-prod
+  nginx.ingress.kubernetes.io/secure-backends: "true"
+  nginx.ingress.kubernetes.io/limit-rps: "5"
+  nginx.ingress.kubernetes.io/limit-rpm: "50"
+  nginx.ingress.kubernetes.io/limit-connections: "5"
+  prometheus.io/scrape: "true"
+  prometheus.io/port: "10254"
+  nginx.ingress.kubernetes.io/configuration-snippet: |
+    location ~ /metrics(.*)$ {
+      rewrite ^ / permanent;
+    }
