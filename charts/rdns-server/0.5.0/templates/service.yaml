@@ -6,7 +6,6 @@ metadata:
     app: {{ template "rdnsserver.name" . }}
   annotations:
     {{- toYaml .Values.serviceAnnotations| nindent 4 }}
-
 spec:
   ports:
   - port: 80
