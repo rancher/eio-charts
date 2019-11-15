@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "gitMirror.fullname" . }}-mirror
+  name: {{ include "gitMirror.fullname" . }}
   labels:
-    app.kubernetes.io/name: {{ include "gitMirror.name" . }}-mirror
+    app.kubernetes.io/name: {{ include "gitMirror.name" . }}
     helm.sh/chart: {{ include "gitMirror.chart" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
@@ -15,5 +15,5 @@ spec:
       protocol: TCP
       name: http
   selector:
-    app.kubernetes.io/name: {{ include "gitMirror.name" . }}-mirror
+    app.kubernetes.io/name: {{ include "gitMirror.name" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}

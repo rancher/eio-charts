@@ -42,49 +42,6 @@ serve:
      - secretName: git-rancher-io-tls
        hosts:
          - git.rancher.io
-
-logrotate:
-  image:
-    repository: rancher/git-logrotate
-    tag: v0.5.0
-    pullPolicy: IfNotPresent
-  resources:
-    limits:
-     cpu: 200m
-     memory: 256Mi
-    requests:
-     cpu: 100m
-     memory: 128Mi
-
-analyze:
-  enabled: false
-  replicaCount: 1
-  image:
-    repository: rancher/git-analyze
-    tag: v0.3.1
-    pullPolicy: IfNotPresent
-  resources:
-    limits:
-     cpu: 200m
-     memory: 256Mi
-    requests:
-     cpu: 100m
-     memory: 128Mi
-
-metrics:
-  replicaCount: 1
-  image:
-    repository: rawmind/rancher-catalog-stats
-    tag: 0.3-1
-    pullPolicy: IfNotPresent
-  resources:
-    limits:
-     cpu: 200m
-     memory: 256Mi
-    requests:
-     cpu: 100m
-     memory: 128Mi
-
 nameOverride: ""
 fullnameOverride: ""
 

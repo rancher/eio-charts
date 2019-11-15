@@ -2,21 +2,21 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app.kubernetes.io/name: {{ include "gitMirror.name" . }}-mirror
+    app.kubernetes.io/name: {{ include "gitMirror.name" . }}
     helm.sh/chart: {{ include "gitMirror.chart" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
-  name: {{ include "gitMirror.name" . }}-mirror
+  name: {{ include "gitMirror.name" . }}
 spec:
   replicas: {{ .Values.mirror.replicaCount }}
   selector:
     matchLabels:
-      app.kubernetes.io/name: {{ include "gitMirror.name" . }}-mirror
+      app.kubernetes.io/name: {{ include "gitMirror.name" . }}
       app.kubernetes.io/instance: {{ .Release.Name }}
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: {{ include "gitMirror.name" . }}-mirror
+        app.kubernetes.io/name: {{ include "gitMirror.name" . }}
         app.kubernetes.io/instance: {{ .Release.Name }}
     spec:
       shareProcessNamespace: true
@@ -65,24 +65,6 @@ spec:
           name: git-dir
         - mountPath: /var/log/nginx
           name: efs-shared
-      - name: logrotate
-        env:
-        - name: MY_POD_NAME
-          valueFrom:
-            fieldRef:
-              fieldPath: metadata.name
-        securityContext:
-          capabilities:
-            add:
-            - SYS_PTRACE
-        image: {{ .Values.logrotate.image.repository }}:{{ .Values.logrotate.image.tag }}
-        imagePullPolicy: {{ .Values.logrotate.image.pullPolicy }}
-        resources:
-          {{ toYaml .Values.logrotate.resources | nindent 10 }}
-        volumeMounts:
-        - mountPath: /var/log/nginx
-          name: efs-shared
-
       restartPolicy: Always
       volumes:
       - name: git-dir
