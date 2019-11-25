@@ -63,13 +63,8 @@ spec:
         volumeMounts:
         - mountPath: {{ .Values.mirrorDataDir }}
           name: git-dir
-        - mountPath: /var/log/nginx
-          name: efs-shared
       restartPolicy: Always
       volumes:
       - name: git-dir
         emptyDir:
           medium: Memory
-      - name: efs-shared
-        persistentVolumeClaim:
-          claimName: efs-shared
