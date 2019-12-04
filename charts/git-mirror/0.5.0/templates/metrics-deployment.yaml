@@ -60,7 +60,6 @@ spec:
         - mountPath: /var/log/nginx
           name: efs-shared
       restartPolicy: Always
-
       volumes:
       - name: efs-shared
         persistentVolumeClaim:
