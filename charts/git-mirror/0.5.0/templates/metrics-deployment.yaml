@@ -52,6 +52,7 @@ spec:
         - $(INFLUX_USER)
         - -influxpass
         - $(INFLUX_PASS)
+        - debug
         image: {{ .Values.metrics.image.repository }}:{{ .Values.metrics.image.tag }}
         imagePullPolicy: {{ .Values.metrics.image.pullPolicy }}
         resources:
