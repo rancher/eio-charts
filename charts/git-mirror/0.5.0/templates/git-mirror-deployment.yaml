@@ -63,8 +63,6 @@ spec:
         volumeMounts:
         - mountPath: {{ .Values.mirrorDataDir }}
           name: git-dir
-        - mountPath: /var/log/nginx
-          name: efs-shared
       - name: logrotate
         env:
         - name: MY_POD_NAME
@@ -81,13 +79,12 @@ spec:
           {{ toYaml .Values.logrotate.resources | nindent 10 }}
         volumeMounts:
         - mountPath: /var/log/nginx
-          name: efs-shared
-
+          name: fluentd
       restartPolicy: Always
       volumes:
       - name: git-dir
         emptyDir:
           medium: Memory
-      - name: efs-shared
+      - name: fluentd
         persistentVolumeClaim:
-          claimName: efs-shared
+          claimName: fluentd

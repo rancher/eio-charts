@@ -58,9 +58,9 @@ spec:
           {{ toYaml .Values.metrics.resources | nindent 10 }}
         volumeMounts:
         - mountPath: /var/log/nginx
-          name: efs-shared
+          name: fluentd
       restartPolicy: Always
       volumes:
-      - name: efs-shared
+      - name: fluentd
         persistentVolumeClaim:
-          claimName: efs-shared
+          claimName: fluentd
