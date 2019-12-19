@@ -102,3 +102,29 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+catalog_filepath: /var/log/fluentd/catalog/access*.log
+
+persistence:
+  enabled: false
+  ## If defined, storageClassName: <storageClass>
+  ## If set to "-", storageClassName: "", which disables dynamic provisioning
+  ## If undefined (the default) or set to null, no storageClassName spec is
+  ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
+  ##   GKE, AWS & OpenStack)
+  ##
+#  storageClass: "efs"
+#  annotations: {
+#    volume.beta.kubernetes.io/storage-class: "efs"
+#  }
+#  accessMode: ReadWriteMany
+#  size: 100Mi
+
+#volumes:
+#  - name: nfs-volume
+#    nfs:
+#      server: nfs.service.io
+#      path: /
+#volumeMounts:
+#  - name: nfs-volume
+#    mountPath: /mnt/nfs/volume

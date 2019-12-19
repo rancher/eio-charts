@@ -69,6 +69,8 @@ spec:
           valueFrom:
             fieldRef:
               fieldPath: metadata.name
+        - name: CATALOG_FILEPATH
+          value: {{ .Values.catalog_filepath }}
         securityContext:
           capabilities:
             add:
@@ -78,13 +80,14 @@ spec:
         resources:
           {{ toYaml .Values.logrotate.resources | nindent 10 }}
         volumeMounts:
-        - mountPath: /var/log/nginx
-          name: fluentd
+{{- if .Values.volumeMounts }}
+{{ toYaml .Values.volumeMounts | indent 8 }}
+{{- end }}
       restartPolicy: Always
       volumes:
       - name: git-dir
         emptyDir:
           medium: Memory
-      - name: fluentd
-        persistentVolumeClaim:
-          claimName: fluentd
+{{- if .Values.volumes }}
+{{ toYaml .Values.volumes | indent 8 }}
+{{- end }}
