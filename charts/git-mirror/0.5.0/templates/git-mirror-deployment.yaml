@@ -89,5 +89,5 @@ spec:
         emptyDir:
           medium: Memory
 {{- if .Values.volumes }}
-{{ toYaml .Values.volumes | indent 8 }}
+{{ toYaml .Values.volumes | indent 6 }}
 {{- end }}
