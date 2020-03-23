@@ -1,5 +1,5 @@
 apiVersion: v2
-name: channelserver
+name: channel-server
 description: k3s channel server service
 
 # A chart can be either an 'application' or a 'library' chart.
