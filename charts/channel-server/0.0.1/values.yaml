@@ -42,17 +42,16 @@ service:
 ingress:
   enabled: true
   annotations:
-    {}
-    # kubernetes.io/ingress.class: nginx
-    # kubernetes.io/tls-acme: "true"
+      kubernetes.io/ingress.class: nginx
+      cert-manager.io/cluster-issuer: letsencrypt-prod
   hosts:
     - host: update.k3s.io
       paths:
       - / 
-  tls: []
-  #  - secretName: chart-example-tls
-  #    hosts:
-  #      - chart-example.local
+  tls: 
+    - secretName: update-k3s-io-tls
+      hosts:
+        - update.k3s.io
 
 resources:
   limits:
