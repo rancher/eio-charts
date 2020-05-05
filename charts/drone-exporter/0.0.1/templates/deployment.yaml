@@ -26,47 +26,47 @@ spec:
             - name: DRONE_URL
               valueFrom:
                 secretKeyRef:
-                  name: {{ .Chart.Name }}-{{ .Release.Name }}
+                  name: {{ .Release.Name }}
                   key: DRONE_URL
             - name: DRONE_TOKEN
               valueFrom:
                 secretKeyRef:
-                  name: {{ .Chart.Name }}-{{ .Release.Name }}
+                  name: {{ .Release.Name }}
                   key: DRONE_TOKEN
             - name: INFLUXDB_ADDRESS
               valueFrom:
                 secretKeyRef:
-                  name: {{ .Chart.Name }}-{{ .Release.Name }}
+                  name: {{ .Release.Name }}
                   key: INFLUXDB_ADDRESS
             - name: INFLUXDB_DATABASE
               valueFrom:
                 secretKeyRef:
-                  name: {{ .Chart.Name }}-{{ .Release.Name }}
+                  name: {{ .Release.Name }}
                   key: INFLUXDB_DATABASE
             - name: INFLUXDB_USERNAME
               valueFrom:
                 secretKeyRef:
-                  name: {{ .Chart.Name }}-{{ .Release.Name }}
+                  name: {{ .Release.Name }}
                   key: INFLUXDB_USERNAME
             - name: INFLUXDB_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: {{ .Chart.Name }}-{{ .Release.Name }}
+                  name: {{ .Release.Name }}
                   key: INFLUXDB_PASSWORD
             - name: INTERVAL
               valueFrom:
                 secretKeyRef:
-                  name: {{ .Chart.Name }}-{{ .Release.Name }}
+                  name: {{ .Release.Name }}
                   key: INTERVAL
             - name: THREADS
               valueFrom:
                 secretKeyRef:
-                  name: {{ .Chart.Name }}-{{ .Release.Name }}
+                  name: {{ .Release.Name }}
                   key: THREADS
             - name: LOG_LEVEL
               valueFrom:
                 secretKeyRef:
-                  name: {{ .Chart.Name }}-{{ .Release.Name }}
+                  name: {{ .Release.Name }}
                   key: LOG_LEVEL
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
