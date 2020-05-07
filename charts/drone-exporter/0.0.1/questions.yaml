@@ -2,9 +2,15 @@ labels:
   io.cattle.role: project # options are cluster/project
 questions:
   - variable: image.repository
+    group: "Images Options"
+    type: string
     required: true
     description: "Image Repository"
+    label: "repository"
     default: "rancher/drone-exporter"
   - variable: image.tag
+    group: "Images Options"
+    type: string
     required: true
     description: "Image Tag"
+    label: "tag"
