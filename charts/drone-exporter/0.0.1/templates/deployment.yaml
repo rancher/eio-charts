@@ -1,0 +1,84 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "drone-exporter.fullname" . }}
+  labels:
+    {{- include "drone-exporter.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "drone-exporter.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "drone-exporter.selectorLabels" . | nindent 8 }}
+    spec:
+    {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            - name: DRONE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}
+                  key: DRONE_URL
+            - name: DRONE_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}
+                  key: DRONE_TOKEN
+            - name: INFLUXDB_ADDRESS
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}
+                  key: INFLUXDB_ADDRESS
+            - name: INFLUXDB_DATABASE
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}
+                  key: INFLUXDB_DATABASE
+            - name: INFLUXDB_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}
+                  key: INFLUXDB_USERNAME
+            - name: INFLUXDB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}
+                  key: INFLUXDB_PASSWORD
+            - name: INTERVAL
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}
+                  key: INTERVAL
+            - name: THREADS
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}
+                  key: THREADS
+            - name: LOG_LEVEL
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}
+                  key: LOG_LEVEL
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
