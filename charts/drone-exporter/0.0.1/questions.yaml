@@ -1,0 +1,10 @@
+labels:
+  io.cattle.role: project # options are cluster/project
+questions:
+  - variable: image.repository
+    required: true
+    description: "Image Repository"
+    default: "rancher/drone-exporter"
+  - variable: image.tag
+    required: true
+    description: "Image Tag"
