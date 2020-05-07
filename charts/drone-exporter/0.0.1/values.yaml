@@ -6,6 +6,7 @@ replicaCount: 1
 
 image:
   repository: rancher/drone-exporter
+  tag: ""
   pullPolicy: IfNotPresent
 
 imagePullSecrets: []
