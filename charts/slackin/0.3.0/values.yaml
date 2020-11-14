@@ -21,12 +21,6 @@ slackinTheme: "light"
 slackinPort: 3000
 #Slackin App Port Defaul 3000
 
-slackinInterval: 3600000
-#Slackin Interval - How often to poll slack data
-
-slackinPageDelay: 6000
-#Slackin Page Delay - How much time between Slack API requests
-
 slackSubdomain: "rancher-users"
 #Your Slack's subdomain (**this**.slack.com)
 
@@ -42,7 +36,7 @@ secret:
   #Google captcha site key
 
 
-replicaCount: 2
+replicaCount: 3
 
 image:
   repository: rancher/slackin-extended
