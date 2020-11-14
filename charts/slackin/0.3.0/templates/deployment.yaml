@@ -37,6 +37,10 @@ spec:
             value: {{ .Values.slackinCSS }}
           - name: SLACKIN_THEME
             value: {{ .Values.slackinTheme }}
+          - name: SLACKIN_INTERVAL
+            value: {{ .Values.slackinInterval }}
+          - name: SLACKIN_PAGE_DELAY
+            value: {{ .Values.slackinPageDelay }}
           - name: SLACK_SUBDOMAIN
             value: {{ .Values.slackSubdomain }}
           - name: SLACK_API_TOKEN
@@ -58,10 +62,6 @@ spec:
             - name: http
               containerPort: {{ .Values.slackinPort }}
               protocol: TCP
-          livenessProbe:
-            httpGet:
-              path: /
-              port: http
           readinessProbe:
             httpGet:
               path: /
