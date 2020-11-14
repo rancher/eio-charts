@@ -24,7 +24,7 @@ slackinPort: 3000
 slackinInterval: 3600000
 #Slackin Interval - How often to poll slack data
 
-slackinPageDelay: 5000
+slackinPageDelay: 6000
 #Slackin Page Delay - How much time between Slack API requests
 
 slackSubdomain: "rancher-users"
