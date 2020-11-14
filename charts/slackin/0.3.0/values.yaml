@@ -42,7 +42,7 @@ secret:
   #Google captcha site key
 
 
-replicaCount: 3
+replicaCount: 1
 
 image:
   repository: rancher/slackin-extended
