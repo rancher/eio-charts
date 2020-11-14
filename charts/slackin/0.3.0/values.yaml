@@ -39,8 +39,8 @@ secret:
 replicaCount: 3
 
 image:
-  repository: drpebcak/slackin-extended
-  tag: 0.13.2
+  repository: rancher/slackin-extended
+  tag: v2.1.3
   pullPolicy: IfNotPresent
 
 nameOverride: ""
