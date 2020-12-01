@@ -69,6 +69,10 @@ master:
     - external-monitor-job:1.7
     - command-launcher:1.3
     - bouncycastle-api:2.17
+    - extended-choice-parameter:0.78
+    - folder-properties:1.2.1
+    - copyartifact:1.39.1
+    - parameter-separator:1.0
   overwritePlugins: true
   JCasC:
     enabled: true
@@ -112,6 +116,7 @@ master:
 persistence:
   existingClaim: jenkins
 agent:
+  containerCap: 30
   image: "drpebcak/jnlp-slave"
   imageTag: "3.29-1-3"
   privileged: true
