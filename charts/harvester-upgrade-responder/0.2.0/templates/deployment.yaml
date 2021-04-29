@@ -1,0 +1,92 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "harvesterUpdateResponder.fullname" . }}
+  labels:
+    app.kubernetes.io/name: {{ include "harvesterUpdateResponder.name" . }}
+    helm.sh/chart: {{ include "harvesterUpdateResponder.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "harvesterUpdateResponder.name" . }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ include "harvesterUpdateResponder.name" . }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
+    spec:
+      imagePullSecrets:
+      - name: {{ .Values.image.pullSecrets }}
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+          - name: INFLUX_URL
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.secret.name }}
+                key: lurInfluxUrl
+          - name: INFLUX_USER
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.secret.name }}
+                key: lurInfluxUser
+          - name: INFLUX_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.secret.name }}
+                key: lurInfluxPassword
+          command:
+          - harvester-services
+          args:
+          - --debug
+          - start-upgrade-responder
+          - --upgrade-response-config
+          - /run/secrets/upgrade-responder-config.json
+          - --influxdb-url
+          - $(INFLUX_URL)
+          - --influxdb-user
+          - $(INFLUX_USER)
+          - --influxdb-pass
+          - $(INFLUX_PASSWORD)
+          ports:
+            - name: http
+              containerPort: {{ .Values.service.port }}
+              protocol: TCP
+          # livenessProbe:
+          #   httpGet:
+          #     path: /
+          #     port: http
+          # readinessProbe:
+          #   httpGet:
+          #     path: /
+          #     port: http
+          volumeMounts:
+          - mountPath: /run/secrets/upgrade-responder-config.json
+            name: lurresponseconfig
+            subPath: upgrade-responder-config.json
+          resources:
+{{ toYaml .Values.resources | indent 12 }}
+    {{- with .Values.nodeSelector }}
+      nodeSelector:
+{{ toYaml . | indent 8 }}
+    {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+{{ toYaml . | indent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+{{ toYaml . | indent 8 }}
+    {{- end }}
+
+
+      volumes:
+      - name: lurresponseconfig
+        configMap:
+          name: lurresponseconfig
