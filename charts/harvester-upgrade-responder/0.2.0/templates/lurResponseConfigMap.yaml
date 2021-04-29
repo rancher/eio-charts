@@ -1,0 +1,13 @@
+{{ if .Values.configMap.managed }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Values.configMap.name }}
+  labels:
+    "app.kubernetes.io/name": '{{ template "harvesterUpdateResponder.name" .}}'
+    "helm.sh/chart": "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    "app.kubernetes.io/managed-by": "{{ .Release.Service }}"
+    "app.kubernetes.io/instance": "{{ .Release.Name }}"
+data:
+  upgrade-responder-config.json: {{ .Values.configMap.lurResponseConfig | toYaml | indent 2 }}
+{{ end }}
