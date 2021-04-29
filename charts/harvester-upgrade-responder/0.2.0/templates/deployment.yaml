@@ -42,10 +42,10 @@ spec:
                 name: {{ .Values.secret.name }}
                 key: lurInfluxPassword
           command:
-          - harvester-services
+          - upgrade-responder
           args:
           - --debug
-          - start-upgrade-responder
+          - start
           - --upgrade-response-config
           - /run/secrets/upgrade-responder-config.json
           - --influxdb-url
