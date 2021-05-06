@@ -5,9 +5,7 @@ metadata:
   labels:
     {{- include "drone-autoscaler.labels" . | nindent 4 }}
 spec:
-  {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
-  {{- end }}
   selector:
     matchLabels:
       {{- include "drone-autoscaler.selectorLabels" . | nindent 6 }}
@@ -32,6 +30,9 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          envFrom:
+            - configMapRef:
+              name: {{ include "drone-autoscaler.fullname" . }}-environment
           ports:
             - name: http
               containerPort: 8080

@@ -11,7 +11,9 @@ image:
   tag: ""
 
 imagePullSecrets: []
+
 nameOverride: ""
+
 fullnameOverride: ""
 
 podAnnotations: {}
@@ -44,3 +46,7 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+environment:
+  config: {}
+  userData: ""
