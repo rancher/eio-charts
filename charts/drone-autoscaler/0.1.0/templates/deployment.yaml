@@ -32,7 +32,7 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           envFrom:
             - configMapRef:
-              name: {{ include "drone-autoscaler.fullname" . }}-environment
+                name: {{ include "drone-autoscaler.fullname" . }}-environment
           ports:
             - name: http
               containerPort: 8080
