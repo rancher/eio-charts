@@ -38,7 +38,7 @@ spec:
               mountPath: /data
             {{- if .Values.environment.userData}}
             - name: user-data
-              mountPath: /data/cloud-init.yaml
+              mountPath: {{ .Values.environment.config.DRONE_AMAZON_USERDATA_FILE | dir }}
             {{- end }}
           ports:
             - name: http
