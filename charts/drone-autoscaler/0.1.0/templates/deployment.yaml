@@ -53,15 +53,15 @@ spec:
               port: http
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
-          volumes:
-          {{- if .Values.environment.config.DRONE_AMAZON_USERDATA_FILE }}
-            - name: user-data
-              secret:
-                secretName: {{ include "drone-autoscaler.fullname" . }}-environment
-                items:
-                  - key: userData
-                    path: {{ .Values.environment.config.DRONE_AMAZON_USERDATA_FILE | base }}
-          {{- end }}
+      volumes:
+        {{- if .Values.environment.config.DRONE_AMAZON_USERDATA_FILE }}
+        - name: user-data
+          secret:
+            secretName: {{ include "drone-autoscaler.fullname" . }}-environment
+            items:
+              - key: userData
+                path: {{ .Values.environment.config.DRONE_AMAZON_USERDATA_FILE | base }}
+       {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
