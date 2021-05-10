@@ -36,7 +36,10 @@ spec:
           volumeMounts:
             - name: data
               mountPath: /data
-              readOnly: false
+            {{- if .Values.environment.userData}}
+            - name: user-data
+              mountPath: /data/cloud-init.yaml
+            {{- end }}
           ports:
             - name: http
               containerPort: 8080
@@ -53,13 +56,15 @@ spec:
             {{- toYaml .Values.resources | nindent 12 }}
       volumes:
         - name: data
+          emptyDir: {}
+        {{- if .Values.environment.userData}}
+        - name: user-data
           secret:
             secretName: {{ include "drone-autoscaler.fullname" . }}-environment
             items:
-              {{- if .Values.environment.config.DRONE_AMAZON_USERDATA_FILE }}
               - key: userData
                 path: {{ .Values.environment.config.DRONE_AMAZON_USERDATA_FILE | base }}
-             {{- end }}
+        {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
