@@ -32,7 +32,7 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           envFrom:
             - secretRef:
-                name: {{ include "drone-autoscaler.fullname" . }}-environment
+                name: {{ include "drone-autoscaler.fullname" . }}-config
           volumeMounts:
             {{- if not (.Values.config.DRONE_DATABASE_DATASOURCE)  }}
             - name: data
