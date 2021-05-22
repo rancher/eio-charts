@@ -34,11 +34,13 @@ spec:
             - secretRef:
                 name: {{ include "drone-autoscaler.fullname" . }}-environment
           volumeMounts:
+            {{- if not (.Values.config.DRONE_DATABASE_DATASOURCE)  }}
             - name: data
               mountPath: /data
-            {{- if .Values.environment.userData}}
-            - name: user-data
-              mountPath: {{ .Values.environment.config.DRONE_AMAZON_USERDATA_FILE | dir }}
+            {{- end }}
+            {{- if or (.Values.userData) (.Values.tlsKey) (.Values.tlsCert) }}
+            - name: resources
+              mountPath: /resources
             {{- end }}
           ports:
             - name: http
@@ -55,13 +57,10 @@ spec:
       volumes:
         - name: data
           emptyDir: {}
-        {{- if .Values.environment.userData}}
-        - name: user-data
+        {{- if or (.Values.userData) (.Values.tlsKey) (.Values.tlsCert) }}
+        - name: resources
           secret:
-            secretName: {{ include "drone-autoscaler.fullname" . }}-environment
-            items:
-              - key: userData
-                path: {{ .Values.environment.config.DRONE_AMAZON_USERDATA_FILE | base }}
+            secretName: {{ include "drone-autoscaler.fullname" . }}-resources
         {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
