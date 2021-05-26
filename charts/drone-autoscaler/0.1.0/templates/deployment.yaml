@@ -31,22 +31,37 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           envFrom:
-            - configMapRef:
-                name: {{ include "drone-autoscaler.fullname" . }}-environment
+            - secretRef:
+                name: {{ include "drone-autoscaler.fullname" . }}-config
+          volumeMounts:
+            {{- if not (.Values.config.DRONE_DATABASE_DATASOURCE)  }}
+            - name: data
+              mountPath: /data
+            {{- end }}
+            {{- if or (.Values.userData) (.Values.tlsKey) (.Values.tlsCert) }}
+            - name: resources
+              mountPath: /resources
+            {{- end }}
           ports:
             - name: http
               containerPort: 8080
               protocol: TCP
           livenessProbe:
-            httpGet:
-              path: /
+            tcpSocket:
               port: http
           readinessProbe:
-            httpGet:
-              path: /
+            tcpSocket:
               port: http
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+      volumes:
+        - name: data
+          emptyDir: {}
+        {{- if or (.Values.userData) (.Values.tlsKey) (.Values.tlsCert) }}
+        - name: resources
+          secret:
+            secretName: {{ include "drone-autoscaler.fullname" . }}-resources
+        {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

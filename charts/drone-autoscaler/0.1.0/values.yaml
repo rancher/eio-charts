@@ -47,6 +47,10 @@ tolerations: []
 
 affinity: {}
 
-environment:
-  config: {}
-  userData: ""
+config: {}
+
+tlsKey: ""
+
+tlsCert: ""
+
+userData: ""
