@@ -47,6 +47,16 @@ tolerations: []
 
 affinity: {}
 
+persistentVolume:
+  enabled:
+  accessModes:
+    - ReadWriteOnce
+  existingClaim: ""
+  size: 1Gi
+
+emptyDir:
+  sizeLimit: ""
+
 config: {}
 
 tlsKey: ""
