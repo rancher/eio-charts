@@ -1,4 +1,4 @@
-apiVersion: v2
+apiVersion: v1
 name: drone-autoscaler
 description: The Drone Autoscaler is a standalone daemon that continuously polls your build queue and provisions or terminates server instances based on volume.
 
