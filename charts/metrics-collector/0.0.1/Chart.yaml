@@ -1,0 +1,14 @@
+apiVersion: v2
+name: metrics-collector
+version: 0.0.1
+appVersion: 0.0.1
+description: Rancher metrics collector Helm chart for Kubernetes
+sources:
+  - https://github.com/rawmind0/github-metrics
+  - https://github.com/rawmind0/rancher-catalog-stats
+  - https://github.com/rawmind0/rancher-telemetry-stats
+maintainers:
+  - name: rawmind0
+    email: rawmind@gmail.com
+engine: gotpl
+type: application
