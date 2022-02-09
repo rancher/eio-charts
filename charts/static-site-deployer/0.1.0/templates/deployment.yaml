@@ -20,9 +20,9 @@ spec:
       labels:
         {{- include "static-site-deployer.selectorLabels" . | nindent 8 }}
     spec:
-      {{- with .Values.imagePullSecrets }}
+      {{- if .Values.imageCredentials }}
       imagePullSecrets:
-        {{- toYaml . | nindent 8 }}
+        - name: {{ include "static-site-deployer.fullname" . }}
       {{- end }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
@@ -32,10 +32,6 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          {{- if not .Values.imagePullSecrets }}
-          imagePullSecrets:
-            - name: {{ include "static-site-deployer.fullname" . }}
-          {{- end }}
           ports:
             - name: http
               containerPort: {{ .Values.container.port | int64 }}
