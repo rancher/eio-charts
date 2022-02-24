@@ -1,0 +1,64 @@
+secret:
+  name: lursecrets
+  # Set this to true if you want to manage these secrets with helm
+  managed: false
+  lurInfluxUrl: ""
+  lurInfluxUser: ""
+  lurInfluxPassword: ""
+
+# This configmap contains information about the latest opni release
+configMap:
+  name: lurresponseconfig
+  # Set this to true if you want to manage this configmap with helm
+  managed: false
+  lurResponseConfig: |-
+    {
+       "Versions": [{
+          "Name": "v0.3.0",
+          "ReleaseDate": "2021-12-11T20:30:00Z",
+          "Tags": ["latest"]
+       }]
+    }
+
+replicaCount: 3
+
+image:
+  repository: rancher/opni-upgrade-responder
+  tag: latest
+  pullPolicy: IfNotPresent
+
+nameOverride: ""
+fullnameOverride: ""
+
+service:
+  type: ClusterIP
+  port: 8314
+
+ingress:
+  enabled: true
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    prometheus.io/scrape: "true"
+    prometheus.io/port: "10254"
+  path: /
+  hosts:
+    - opni-upgrade-responder.rancher.io
+  tls:
+   - secretName: opni-upgrade-responder-rancher-io-tls
+     hosts:
+       - opni-upgrade-responder.rancher.io
+
+resources:
+  limits:
+   cpu: 200m
+   memory: 256Mi
+  requests:
+   cpu: 100m
+   memory: 128Mi
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
