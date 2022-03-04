@@ -1,24 +1,26 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "opniUpdateResponder.fullname" . }}
+  name: {{ include "opniUpgradeResponder.fullname" . }}
   labels:
-    app.kubernetes.io/name: {{ include "opniUpdateResponder.name" . }}
-    helm.sh/chart: {{ include "opniUpdateResponder.chart" . }}
+    app.kubernetes.io/name: {{ include "opniUpgradeResponder.name" . }}
+    helm.sh/chart: {{ include "opniUpgradeResponder.chart" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app.kubernetes.io/name: {{ include "opniUpdateResponder.name" . }}
+      app.kubernetes.io/name: {{ include "opniUpgradeResponder.name" . }}
       app.kubernetes.io/instance: {{ .Release.Name }}
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: {{ include "opniUpdateResponder.name" . }}
+        app.kubernetes.io/name: {{ include "opniUpgradeResponder.name" . }}
         app.kubernetes.io/instance: {{ .Release.Name }}
     spec:
+      imagePullSecrets:
+      - name: {{ .Values.image.pullSecrets }}
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
@@ -28,22 +30,22 @@ spec:
             valueFrom:
               secretKeyRef:
                 name: {{ .Values.secret.name }}
-                key: lurInfluxUrl
+                key: influxUrl
           - name: INFLUX_USER
             valueFrom:
               secretKeyRef:
                 name: {{ .Values.secret.name }}
-                key: lurInfluxUser
+                key: influxUser
           - name: INFLUX_PASSWORD
             valueFrom:
               secretKeyRef:
                 name: {{ .Values.secret.name }}
-                key: lurInfluxPassword
+                key: influxPassword
           command:
-          - upgrade-responder
+          - longhorn-services
           args:
           - --debug
-          - start
+          - start-upgrade-responder
           - --upgrade-response-config
           - /run/secrets/upgrade-responder-config.json
           - --influxdb-url
@@ -66,7 +68,7 @@ spec:
           #     port: http
           volumeMounts:
           - mountPath: /run/secrets/upgrade-responder-config.json
-            name: lurresponseconfig
+            name: opni-upgrade-responder-config
             subPath: upgrade-responder-config.json
           resources:
 {{ toYaml .Values.resources | indent 12 }}
@@ -85,6 +87,6 @@ spec:
 
 
       volumes:
-      - name: lurresponseconfig
+      - name: opni-upgrade-responder-config
         configMap:
-          name: lurresponseconfig
+          name: opni-upgrade-responder-config

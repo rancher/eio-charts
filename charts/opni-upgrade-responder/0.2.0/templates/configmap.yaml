@@ -4,10 +4,10 @@ kind: ConfigMap
 metadata:
   name: {{ .Values.configMap.name }}
   labels:
-    "app.kubernetes.io/name": '{{ template "opniUpdateResponder.name" .}}'
+    "app.kubernetes.io/name": '{{ template "opniUpgradeResponder.name" .}}'
     "helm.sh/chart": "{{ .Chart.Name }}-{{ .Chart.Version }}"
     "app.kubernetes.io/managed-by": "{{ .Release.Service }}"
     "app.kubernetes.io/instance": "{{ .Release.Name }}"
 data:
-  upgrade-responder-config.json: {{ .Values.configMap.lurResponseConfig | toYaml | indent 2 }}
+  upgrade-responder-config.json: {{ .Values.configMap.responseConfig | toYaml | indent 2 }}
 {{ end }}
