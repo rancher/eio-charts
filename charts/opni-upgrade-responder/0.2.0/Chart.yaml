@@ -1,5 +1,0 @@
-apiVersion: v1
-description: A Helm chart for Kubernetes
-name: opni-upgrade-responder
-version: v0.2.0
-
