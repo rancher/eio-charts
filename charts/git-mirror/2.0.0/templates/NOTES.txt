@@ -1,21 +1,24 @@
 1. Get the application URL by running these commands:
-{{- if .Values.serve.ingress.enabled }}
-{{- range .Values.serve.ingress.hosts }}
-  http{{ if $.Values.serve.ingress.tls }}s{{ end }}://{{ . }}{{ $.Values.serve.ingress.path }}
+{{- if .Values.ingress.enabled }}
+{{- range $key, $value := .Values.ingress.hosts }}
+{{- $host := $value.host }}
+  {{- range $key, $value := $.Values.repositories }}
+  http{{ if $.Values.ingress.tls }}s{{ end }}://{{ $host }}/{{ $value.name }}
+  {{- end }}
 {{- end }}
-{{- else if contains "NodePort" .Values.serve.service.type }}
+{{- else if contains "NodePort" .Values.porter.service.type }}
   export NODE_PORT=$(kubectl get --namespace {{ .Release.Namespace }} -o jsonpath="{.spec.ports[0].nodePort}" services {{ include "gitMirror.fullname" . }})
   export NODE_IP=$(kubectl get nodes --namespace {{ .Release.Namespace }} -o jsonpath="{.items[0].status.addresses[0].address}")
   echo http://$NODE_IP:$NODE_PORT
-{{- else if contains "LoadBalancer" .Values.serve.service.type }}
+{{- else if contains "LoadBalancer" .Values.porter.service.type }}
      NOTE: It may take a few minutes for the LoadBalancer IP to be available.
            You can watch the status of by running 'kubectl get svc -w {{ include "gitMirror.fullname" . }}'
   export SERVICE_IP=$(kubectl get svc --namespace {{ .Release.Namespace }} {{ include "gitMirror.fullname" . }} -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
-  echo http://$SERVICE_IP:{{ .Values.serve.service.port }}
-{{- else if contains "ClusterIP" .Values.serve.service.type }}
+  echo http://$SERVICE_IP:{{ .Values.porter.service.port }}
+{{- else if contains "ClusterIP" .Values.porter.service.type }}
   export POD_NAME=$(kubectl get pods --namespace {{ .Release.Namespace }} -l "app.kubernetes.io/name={{ include "gitMirror.name" . }},app.kubernetes.io/instance={{ .Release.Name }}" -o jsonpath="{.items[0].metadata.name}")
   echo "Visit http://127.0.0.1:8080 to use your application"
   kubectl port-forward $POD_NAME 8080:80
 {{- end }}
 
-Source can be found here: https://github.com/rancher/git-mirror-docker
+Source can be found here: https://github.com/rancher/git-mirror
