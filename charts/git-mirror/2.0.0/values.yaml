@@ -1,0 +1,101 @@
+# Default values for git-mirror.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: false
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+ 
+repositories:
+  - name: rancher-catalog
+    url: https://github.com/rancher/rancher-catalog
+    branch: v1.6-development
+  - name: community-catalog
+    url: https://github.com/rancher/community-catalog
+  - name: infra-catalog
+    url: https://github.com/rancher/infra-catalog
+  - name: rancher-charts
+    url: https://github.com/rancher/charts
+    branch: dev-v2.6
+  - name: system-charts
+    url: https://github.com/rancher/system-charts
+    branch: dev-v2.6
+  - name: helm3-charts
+    url: https://github.com/rancher/helm3-charts
+  - name: partner-charts
+    url: https://github.com/rancher/partner-charts
+    branch: main-source
+  - name: rke2-charts
+    url: https://github.com/rancher/rke2-charts
+    branch: main-source
+
+mirror:
+  schedule: '* * * * *'
+  image:
+    repository: rancher/git-mirror
+    tag: v2.0.0
+    pullPolicy: Always
+
+porter:
+  url: git.rancher.io
+  workerConnections: 4096
+  image:
+    repository: rancher/git-porter
+    tag: v2.0.0
+    pullPolicy: Always
+  service:
+    type: ClusterIP
+    port: 80
+
+ingress:
+  annotations: {}
+  enabled: true
+  hosts:
+    - host: git.rancher.io
+  tls:
+   - secretName: git-rancher-io-tls
+     hosts:
+       - git.rancher.io
+
+nameOverride: ""
+fullnameOverride: ""
+
+nodeSelector: {}
+
+podAnnotations: {}
+
+tolerations: []
+
+affinity: {}
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+
+volume:
+  annotations: {}
+  accessMode: ReadWriteOnce
+  size: "256Mi"
+  storageClassName: ""
+

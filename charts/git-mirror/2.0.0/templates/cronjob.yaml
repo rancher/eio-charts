@@ -1,0 +1,42 @@
+{{- range $key, $value := .Values.repositories }}
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: {{ $value.name }}
+spec:
+  concurrencyPolicy: Forbid
+  failedJobsHistoryLimit: 1
+  jobTemplate:
+    metadata:
+      creationTimestamp: null
+    spec:
+      template:
+        metadata:
+          creationTimestamp: null
+        spec:
+          containers:
+          - env:
+            - name: GIT_REPOSITORY_NAME
+              value: {{ $value.name }}
+            - name: GIT_REPOSITORY_URL
+              value: {{ $value.url }}
+            {{- if $value.branch }}
+            - name: GIT_REPOSITORY_BRANCH
+              value: {{ $value.branch }}
+            {{- end }}
+            image: "{{ $.Values.mirror.image.repository }}:{{ $.Values.mirror.image.tag | default $.Chart.AppVersion }}"
+            imagePullPolicy: "{{ $.Values.mirror.image.pullPolicy }}"
+            name: git-mirror
+            volumeMounts:
+            - mountPath: "/var/git"
+              name: git-dir
+          restartPolicy: Never
+          volumes:
+            - name: git-dir
+              persistentVolumeClaim:
+                claimName: {{ $value.name }}
+  schedule: "{{ $.Values.mirror.schedule }}"
+  successfulJobsHistoryLimit: 1
+  suspend: false
+{{- end }}

@@ -1,0 +1,84 @@
+{{- range $key, $value := .Values.repositories }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ $value.name }}
+  labels:
+    app.kubernetes.io/name: {{ include "git-mirror.name" $ }}
+    app.kubernetes.io/instance: {{ $value.name }}
+spec:
+  {{- if not $.Values.autoscaling.enabled }}
+  replicas: {{ $.Values.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "git-mirror.name" $ }}
+      app.kubernetes.io/instance: {{ $value.name }}
+  template:
+    metadata:
+      {{- with $.Values.podAnnotations }}
+      annotations:
+        {{- toYaml $ | nindent 8 }}
+      {{- end }}
+      labels:
+        app.kubernetes.io/name: {{ include "git-mirror.name" $ }}
+        app.kubernetes.io/instance: {{ $value.name }}
+    spec:
+      {{- with $.Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml $ | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "git-mirror.serviceAccountName" $ }}
+      securityContext:
+        {{- toYaml $.Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: git-porter
+          image: "{{ $.Values.porter.image.repository }}:{{ $.Values.porter.image.tag | default $.Chart.AppVersion }}"
+          imagePullPolicy: "{{ $.Values.porter.image.pullPolicy }}"
+          ports:
+          - name: http
+            containerPort: 80
+            protocol: TCP
+          volumeMounts:
+          - mountPath: "/var/git"
+            name: git-dir
+          - mountPath: "/etc/nginx/nginx.conf"
+            name: git-porter
+            readOnly: true
+            subPath: "nginx.conf"
+      initContainers:
+        - name: git-scrub
+          command:
+          - rm
+          - -rf
+          - {{ $value.name }}.git
+          image: "{{ $.Values.porter.image.repository }}:{{ $.Values.porter.image.tag | default $.Chart.AppVersion }}"
+          imagePullPolicy: "{{ $.Values.porter.image.pullPolicy }}"
+          volumeMounts:
+          - mountPath: "/var/git"
+            name: git-dir
+          workingDir: "/var/git"
+        - name: git-clone
+          command:
+          - git
+          - clone
+          - --bare
+          - {{ $value.url }}
+          - {{ $value.name }}.git
+          image: "{{ $.Values.porter.image.repository }}:{{ $.Values.porter.image.tag | default $.Chart.AppVersion }}"
+          imagePullPolicy: "{{ $.Values.porter.image.pullPolicy }}"
+          volumeMounts:
+          - mountPath: "/var/git"
+            name: git-dir
+          workingDir: "/var/git"
+      volumes:
+        - name: git-dir
+          persistentVolumeClaim:
+            claimName: {{ $value.name }}
+        - name: git-porter
+          configMap:
+            defaultMode: 420
+            name: git-porter
+            optional: false
+{{- end }}

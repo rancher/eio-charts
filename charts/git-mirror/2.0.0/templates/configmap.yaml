@@ -1,0 +1,54 @@
+---
+apiVersion: v1
+data:
+  nginx.conf: |-
+    user nginx;
+    worker_processes auto;
+
+    error_log  /dev/stderr;
+    pid        /run/nginx.pid;
+
+    daemon off;
+
+    events {
+      worker_connections {{ .Values.porter.workerConnections }};
+    }
+
+    http {
+      log_format main '[$time_local] $http_host $remote_addr $http_x_forwarded_for '
+                      '"$request" $status $body_bytes_sent "$http_referer" '
+                      '"$http_user_agent" $request_time $upstream_response_time "$http_x_install_uuid"';
+
+      access_log /dev/stdout main;
+
+      server {
+        listen  *:80;
+
+        server_name {{ .Values.porter.url }};
+
+        root /var/git;
+
+        # strip the .git
+        rewrite ^(/.*)\.git(/.*)$ $1$2;
+
+        # strip the UUID
+        rewrite "^(/[^/]+)/[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}(/.*)$" $1$2 last;
+
+        location ~ (/.*) {
+          client_max_body_size 0;
+          
+          include fastcgi_params;
+          fastcgi_param   SCRIPT_FILENAME /usr/libexec/git-core/git-http-backend;
+          fastcgi_param   GIT_HTTP_EXPORT_ALL "";
+          fastcgi_param   GIT_PROJECT_ROOT /var/git;
+          fastcgi_param   PATH_INFO   $1;
+          
+          # Forward REMOTE_USER as we want to know when we are authenticated
+          fastcgi_param REMOTE_USER $remote_user;
+          fastcgi_pass unix:/run/fcgi.sock;
+        }
+      }
+    }
+kind: ConfigMap
+metadata:
+  name: git-porter
