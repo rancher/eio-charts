@@ -1,5 +1,0 @@
-Thank you for installing {{ .Chart.Name }}.
-
-Your release is named {{ .Release.Name }}.
-
-Check out the k3s docs at https://github.com/rancher/k3s/blob/master/README.md

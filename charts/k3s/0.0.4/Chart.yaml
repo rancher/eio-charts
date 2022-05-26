@@ -1,6 +1,0 @@
-apiVersion: v1
-appVersion: 0.5.0
-description: Deploys a k3s cluster
-icon: https://github.com/rancher/ui/blob/master/public/assets/images/logos/welcome-cow.svg
-name: k3s
-version: 0.0.4

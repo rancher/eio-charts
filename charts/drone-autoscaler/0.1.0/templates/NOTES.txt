@@ -1,2 +1,0 @@
-Drone Autoscaler documentation site:
-https://autoscale.drone.io
