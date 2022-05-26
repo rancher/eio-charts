@@ -1,0 +1,15 @@
+---
+kind: pipeline
+name: 
+
+steps:
+- name: helm-lint
+  image: alpine:latest
+  commands:
+    - echo 'https://dl-cdn.alpinelinux.org/alpine/edge/testing' >> /etc/apk/repositories
+    - apk update && apk add helm
+    - helm lint charts/*/*
+  when:
+    event:
+      - pull_request
+
