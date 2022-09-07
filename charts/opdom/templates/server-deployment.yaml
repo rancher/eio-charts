@@ -38,7 +38,7 @@ spec:
             - /opt/opdom/config.json
           ports:
             - name: http
-              containerPort: 8080
+              containerPort: {{ .Values.server.port }}
               protocol: TCP
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
