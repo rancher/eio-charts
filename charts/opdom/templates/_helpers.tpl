@@ -5,7 +5,7 @@
 
 {{/* Selector labels */}}
 {{- define "opdom.selectorLabels" -}}
-app.kubernetes.io/name: {{ (.Values.app).name }}
+app.kubernetes.io/name: {{ .Values.app.name }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
@@ -21,9 +21,9 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 
 {{/* Create the name of the service account to use */}}
 {{- define "opdom.serviceAccountName" -}}
-{{- if (.Values.serviceAccount).create }}
-{{- default (.Values.app).name (.Values.serviceAccount).name }}
+{{- if .Values.serviceAccount.create }}
+{{- default .Values.app.name .Values.serviceAccount.name }}
 {{- else }}
-{{- default "default" (.Values.serviceAccount).name }}
+{{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
