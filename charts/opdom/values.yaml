@@ -8,7 +8,7 @@ github:
 
 app:
   name: "opdom"
-  hostName: "opdom.local"
+  hostname: "opdom.local"
   secretKey: "fake1234"
   image:
     repository: rancher/opdom

@@ -1,16 +1,3 @@
-{{/*
-Expand the name of the chart.
-We truncate at 63 chars because some Kubernetes name fields are limited to this by the DNS naming spec.
-*/}}
-{{- define "opdom.name" -}}
-{{- default Chart.Name .Values.app.name | trunc 63 | trimSuffix "-" }}
-{{- end }}
-
-{{/* Create a default fully qualified app name. */}}
-{{- define "opdom.hostname" -}}
-{{- required "A hostname for the app is required." .Values.app.hostname | trunc 63 | trimSuffix "-" }}
-{{- end }}
-
 {{/* Create chart name and version as used by the chart label. */}}
 {{- define "opdom.chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
@@ -18,7 +5,7 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
 
 {{/* Selector labels */}}
 {{- define "opdom.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "opdom.name" . }}
+app.kubernetes.io/name: {{ (.Values.app).name }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
@@ -34,9 +21,9 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 
 {{/* Create the name of the service account to use */}}
 {{- define "opdom.serviceAccountName" -}}
-{{- if .Values.serviceAccount.create }}
-{{- default (include "opdom.name" .) .Values.serviceAccount.name }}
+{{- if (.Values.serviceAccount).create }}
+{{- default (.Values.app).name (.Values.serviceAccount).name }}
 {{- else }}
-{{- default "default" .Values.serviceAccount.name }}
+{{- default "default" (.Values.serviceAccount).name }}
 {{- end }}
 {{- end }}

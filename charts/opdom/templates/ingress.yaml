@@ -2,7 +2,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: {{ include "opdom.hostname" . }}
+  name: {{ .Values.app.hostname }}
   labels:
     {{- include "opdom.labels" . | nindent 4 }}
   {{- with .Values.ingress.annotations }}
@@ -31,9 +31,9 @@ spec:
             pathType: {{ .pathType }}
             backend:
               service:
-                name: {{ include "opdom.name" . }}
+                name: {{ $.Values.app.name }}
                 port:
-                  number: {{ .Values.app.service.port }}
+                  number: {{ $.Values.app.service.port }}
           {{- end }}
     {{- end }}
 {{- end }}

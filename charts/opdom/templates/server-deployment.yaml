@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "opdom.name" . }}
+  name: {{ .Values.app.name }}
   labels:
     {{- include "opdom.labels" . | nindent 4 }}
     app.kubernetes.io/component: server
@@ -24,7 +24,7 @@ spec:
       volumes:
       - name: config
         secret:
-          secretName: {{ include "opdom.name" . }}
+          secretName: {{ .Values.app.name }}
       containers:
         - name: opdom
           volumeMounts:
