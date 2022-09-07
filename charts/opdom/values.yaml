@@ -1,19 +1,19 @@
 # Default values for opdom.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
-fullnameOverride: ""
-nameOverride: ""
 
 github:
   clientId: "fake1234"
   clientSecret: "fake1234"
 
-server:
+app:
+  name: "opdom"
+  hostName: "opdom.local"
   secretKey: "fake1234"
   image:
     repository: rancher/opdom
     pullPolicy: Always
-    tag: v0.1.0
+    tag: latest
   replicaCount: 1
   resources: {}
   nodeSelector: {}
@@ -24,29 +24,31 @@ server:
   service:
     type: ClusterIP
     port: 80
+  dbConnection:
+    host: "opdom-db.local"
+    port: "3306"
+    username: "opdom"
+    password: "opdom"
+    name: "opdom"
 
-db:
-  enabled: true
-  name: "opdom"
-  username: "opdom"
-  password: "opdom"
-  hostname: "opdom-db-0"
-  port: "3306"
-  image:
-    pullPolicy: IfNotPresent
-  resources: {}
-  nodeSelector: {}
-  tolerations: []
-  affinity: {}
-  podAnnotations: {}
+serviceAccount:
+  create: false
+  name: default
 
 ingress:
   enabled: true
-  className: ""
-  annotations: {}
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
   hosts:
-    - host: opdom.local
+    - host: "opdom.local"
       paths:
-        - path: /
-          pathType: ImplementationSpecific
-  tls: []
+        - path: "/"
+          pathType: "ImplementationSpecific"
+          backend:
+            service:
+              name: "opdom-server"
+              port:
+                number: "80"
+  tls:
+    - hosts: [ "opdom.local" ]
+      secretName: opdom-local

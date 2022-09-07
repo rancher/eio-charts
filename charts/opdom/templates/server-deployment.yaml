@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "opdom.serverName" . }}
+  name: {{ include "opdom.name" . }}
   labels:
     {{- include "opdom.labels" . | nindent 4 }}
     app.kubernetes.io/component: server
 spec:
-  replicas: {{ .Values.server.replicaCount }}
+  replicas: {{ .Values.app.replicaCount }}
   selector:
     matchLabels:
       {{- include "opdom.selectorLabels" . | nindent 6 }}
       app.kubernetes.io/component: server
   template:
     metadata:
-      {{- with .Values.server.podAnnotations }}
+      {{- with .Values.app.podAnnotations }}
       annotations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
@@ -24,21 +24,21 @@ spec:
       volumes:
       - name: config
         secret:
-          secretName: {{ include "opdom.serverName" . }}
+          secretName: {{ include "opdom.name" . }}
       containers:
         - name: opdom
           volumeMounts:
           - name: config
             mountPath: /opt/opdom
-          image: "{{ .Values.server.image.repository }}:{{ .Values.server.image.tag }}"
-          imagePullPolicy: {{ .Values.server.image.pullPolicy }}
+          image: "{{ .Values.app.image.repository }}:{{ .Values.app.image.tag }}"
+          imagePullPolicy: {{ .Values.app.image.pullPolicy }}
           command:
             - ./bin/opdom
             - -c
             - /opt/opdom/config.json
           ports:
             - name: http
-              containerPort: {{ .Values.server.port }}
+              containerPort: {{ .Values.app.port }}
               protocol: TCP
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
