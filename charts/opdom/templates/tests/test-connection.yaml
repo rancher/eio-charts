@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "{{ .Values.app.name }}-test-connection"
+  labels:
+    {{- include "opdom.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": test
+spec:
+  containers:
+    - name: wget
+      image: busybox
+      command: ['wget']
+      args: ['{{ .Values.app.hostname }}:{{ .Values.app.service.port }}']
+  restartPolicy: Never
