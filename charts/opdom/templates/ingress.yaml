@@ -34,7 +34,7 @@ spec:
           - path: {{ .path }}
             pathType: {{ .pathType }}
             backend:
-            {{- if or (.Capabilities.APIVersions.Has "networking.k8s.io/v1/Ingress") (not (.Capabilities.APIVersions.Has "networking.k8s.io/v1beta1/Ingress")) }}
+            {{- if or ($.Capabilities.APIVersions.Has "networking.k8s.io/v1/Ingress") (not ($.Capabilities.APIVersions.Has "networking.k8s.io/v1beta1/Ingress")) }}
               service:
                 name: {{ $.Values.app.name }}
                 port:
