@@ -13,7 +13,7 @@ app:
   image:
     repository: rancher/opdom
     pullPolicy: Always
-    tag: latest
+    tag: v0.1.0
   replicaCount: 1
   resources: {}
   nodeSelector: {}
