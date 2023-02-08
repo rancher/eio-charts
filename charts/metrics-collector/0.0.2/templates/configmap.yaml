@@ -1,11 +1,9 @@
-{{- if .Values.configmaps.query_params }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
   name: {{ template "metrics-collector.name" . }}-query-params
   labels:
-    "helm.sh/chart": "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    {{- include "metrics-collector.labels" . | nindent 4 }}
 data:
   hours: {{ .Values.configmaps.query_params.hours | quote | indent 2 }}
   refresh: {{ .Values.configmaps.query_params.refresh | quote | indent 2 }}
-{{- end }}
