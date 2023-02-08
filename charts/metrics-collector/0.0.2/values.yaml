@@ -30,7 +30,7 @@ args: []
 resources:
   limits:
    cpu: "1" 
-   memory: 999Mi
+   memory: 1.5Gi 
   requests:
    cpu: 100m
    memory: 128Mi
