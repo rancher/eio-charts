@@ -75,12 +75,12 @@ spec:
         - name: HOURS
           valueFrom:
             configMapKeyRef:
-              name: telemetry-metrics-telemetry-query-params
+              name: metrics-telemetry-query-params
               key: hours
         - name: REFRESH 
           valueFrom:
             configMapKeyRef:
-              name: telemetry-metrics-telemetry-query-params 
+              name: metrics-telemetry-query-params 
               key: refresh 
         image: {{ .Values.image }}
         imagePullPolicy: {{ .Values.pullPolicy | default "IfNotPresent" }}
