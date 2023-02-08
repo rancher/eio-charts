@@ -1,0 +1,12 @@
+{{- if .Values.configmaps.query_params }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "metrics-collector.name" . }}-query-params
+  labels:
+    "app.kubernetes.io/name": '{{ template "server.name" .}}'
+    "helm.sh/chart": "{{ .Chart.Name }}-{{ .Chart.Version }}"
+data:
+  hours: {{ .Values.configmaps.query_params.hours | indent 2 }}
+  refresh: {{ .Values.configmaps.query_params.refresh | indent 2 }}
+{{- end }}

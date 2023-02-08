@@ -1,0 +1,115 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "metrics-collector.name" . }}
+  labels:
+    {{- include "metrics-collector.labels" . | nindent 4 }}
+{{- if .Values.labels }}
+{{ toYaml .Values.labels | indent 4 }}
+{{- end }}
+{{- with .Values.annotations }}
+  annotations:
+{{ toYaml . | indent 4 }}
+{{- end }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "metrics-collector.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "metrics-collector.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+      - args:
+        env:
+      {{- range $key, $value := .Values.secrets -}}
+        {{- if and ( eq $key "influx" ) ( $value.enabled ) }}
+        - name: INFLUX_DB
+          valueFrom:
+            secretKeyRef:
+              key: {{ $value.dbKey | default "influxdb-name"}}
+              name: {{ $value.name }}
+              optional: false
+        - name: INFLUX_PASS
+          valueFrom:
+            secretKeyRef:
+              key: {{ $value.passKey | default "influxdb-password" }}
+              name: {{ $value.name }}
+              optional: false
+        - name: INFLUX_URL
+          valueFrom:
+            secretKeyRef:
+              key: {{ $value.urlKey | default "influxdb-url" }}
+              name: {{ $value.name }}
+              optional: false
+        - name: INFLUX_USER
+          valueFrom:
+            secretKeyRef:
+              key: {{ $value.userKey | default "influxdb-user" }}
+              name: {{ $value.name }}
+              optional: false
+        {{- end }}
+        {{- if and ( eq $key "telemetry" ) ( $value.enabled ) }}
+        - name: TELEMETRY_ACCESS_KEY
+          valueFrom:
+            secretKeyRef:
+              key: {{ $value.accessKey | default "telemetry-access-key" }}
+              name: {{ $value.name }}
+              optional: false
+        - name: TELEMETRY_SECRET_KEY
+          valueFrom:
+            secretKeyRef:
+              key: {{ $value.secretKey | default "telemetry-secret-key" }}
+              name: {{ $value.name }}
+              optional: false
+        - name: TELEMETRY_URL
+          valueFrom:
+            secretKeyRef:
+              key: {{ $value.urlKey | default "telemetry-url" }}
+              name: {{ $value.name }}
+              optional: false
+        {{- end }}
+      {{- end }}
+        - name: HOURS
+          valueFrom:
+            configMapKeyRef:
+              name: telemetry-metrics-telemetry-query-params
+              key: hours
+        - name: REFRESH 
+          valueFrom:
+            configMapKeyRef:
+              name: telemetry-metrics-telemetry-query-params 
+              key: refresh 
+        image: {{ .Values.image }}
+        imagePullPolicy: {{ .Values.pullPolicy | default "IfNotPresent" }}
+        name: {{ .Chart.Name }}
+        {{- with .Values.resources }}
+        resources:
+{{ toYaml . | indent 10 }}
+        {{- end }}
+        {{- with .Values.volumeMounts }}
+        volumeMounts:
+{{ toYaml . | indent 10 }}
+        {{- end }}
+        securityContext:
+          capabilities:
+            drop: ['all']
+          allowPrivilegeEscalation: false
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+{{ toYaml . | indent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+{{ toYaml . | indent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+{{ toYaml . | indent 6 }}
+      {{- end }}
+      {{- with .Values.volumes }}
+      volumes:
+{{ toYaml . | indent 6 }}
+      {{- end }}

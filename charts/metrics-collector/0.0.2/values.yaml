@@ -1,0 +1,48 @@
+secrets:
+  influx:
+    enabled: true
+    name: influx
+
+  telemetry:
+    enabled: true
+    name: telemetry
+    ## Set secket keys if needed
+    # accessKey: telemetry-access-key
+    # secretKey: telemetry-secret-key
+    # urlKey: telemetry_url
+
+configmaps:
+  query_params:
+    hours: "1"
+    refresh: "3000"
+
+## Set the kind of metrics to collect: catalog, github and telemetry are supported
+kind: github
+image: rancherlabs/rancher-telemetry-stats:v0.0.1
+pullPolicy: IfNotPresent
+volumeMounts: []
+## Metrics arg by kind
+# catalog   https://github.com/rawmind0/rancher-catalog-stats#usage
+# github    https://github.com/rawmind0/github-metrics#usage
+# telemetry https://github.com/rawmind0/rancher-telemetry-stats#usage
+args: []
+
+resources:
+  limits:
+   cpu: "1" 
+   memory: 999Mi
+  requests:
+   cpu: 100m
+   memory: 128Mi
+
+## Node labels for pod assignment https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/
+nodeSelector: {}
+
+## Tolerations for pod assignment https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
+tolerations: []
+
+## Affinity for pod assignment https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
+affinity: {}
+
+## Volumes for pod https://kubernetes.io/docs/concepts/storage/volumes/
+volumes: []
