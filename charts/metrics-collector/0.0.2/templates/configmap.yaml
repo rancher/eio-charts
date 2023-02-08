@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ template "metrics-collector.name" . }}-query-params
+  name: metrics-collector-query-params 
   labels:
     {{- include "metrics-collector.labels" . | nindent 4 }}
 data:
