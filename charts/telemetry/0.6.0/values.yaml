@@ -17,7 +17,7 @@ admin:
 
 image:
   repository: rancher/telemetry
-  tag: v0.6.0
+  tag: v0.6.0-amd64
   pullPolicy: IfNotPresent
 
 service:
