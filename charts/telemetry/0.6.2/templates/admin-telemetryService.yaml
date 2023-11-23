@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "telemetry.fullname" . }}-admin
+  labels:
+    app.kubernetes.io/name: {{ include "telemetry.name" . }}-admin
+    helm.sh/chart: {{ include "telemetry.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}-admin
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    app.kubernetes.io/name: {{ include "telemetry.name" . }}-admin
+    app.kubernetes.io/instance: {{ .Release.Name }}-admin
